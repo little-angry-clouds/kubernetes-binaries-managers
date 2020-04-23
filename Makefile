@@ -27,7 +27,7 @@ clean:
 	-rm releases/*
 
 static: | $(GOLANGCI-LINT) $(GOPHERBADGER)
-	$(GOLANGCI-LINT) run
+	$(GOLANGCI-LINT) run ./...
 	$(GOPHERBADGER) -md="README.md"
 
 test:
