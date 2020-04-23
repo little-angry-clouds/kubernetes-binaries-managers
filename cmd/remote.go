@@ -42,8 +42,8 @@ func getLastPage(link string) (int, error) {
 
 func getVersions(endpoint string) ([]*version.Version, error) {
 	var versions []*version.Version
-	var defaultHTTPTimeout time.Duration = 5
-	var client = http.Client{Timeout: time.Second * defaultHTTPTimeout}
+	var defaultHTTPTimeout time.Duration = time.Second * 5
+	var client = http.Client{Timeout: defaultHTTPTimeout}
 
 	resp, err := client.Get(endpoint + "1")
 	if err != nil {
