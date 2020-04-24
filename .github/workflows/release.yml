@@ -13,6 +13,8 @@ jobs:
         id: go
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          submodules: recursive
       - name: Run static checks
         run: make static
       - name: Run unit tests
