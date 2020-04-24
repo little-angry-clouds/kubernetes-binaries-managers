@@ -15,8 +15,10 @@ jobs:
         uses: actions/checkout@v2
       - name: Run static checks
         run: make static
-      - name: Test
-        run: make test
+      - name: Run unit tests
+        run: make unit-test
+      - name: Run int tests
+        run: make int-test
       - name: Build releases
         run: make releases
         if: startsWith(github.ref, 'refs/tags/')
