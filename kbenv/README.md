@@ -18,12 +18,14 @@ Currently kbenv supports the following OSes
 
 ## Installation
 
-1. Add `~/.bin` to your `$PATH`
+1. Add `~/.bin` to your `$PATH` and create it if doesn't exist
 
 ```bash
 echo 'export PATH="$HOME/.bin:$PATH"' >> ~/.bashrc
 # Or
 echo 'export PATH="$HOME/.bin:$PATH"' >> ~/.zshrc
+
+mkdir -p ~/.bin
 ```
 
 For Windows you should do the weird stuff that it needs to to set an environmental variable.
