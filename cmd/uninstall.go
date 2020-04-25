@@ -49,7 +49,7 @@ func uninstall(cmd *cobra.Command, args []string) {
 // uninstallCmd represents the uninstall command
 var uninstallCmd = &cobra.Command{
 	Use:   "uninstall",
-	Short: "A brief description of your command",
+	Short: "Uninstall helm binary",
 	Run:   uninstall,
 }
 
