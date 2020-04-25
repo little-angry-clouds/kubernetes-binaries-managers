@@ -1,6 +1,8 @@
-name: Main
+name: Release
 
-on: push
+on:
+  push:
+    branches: master
 
 jobs:
   release:
@@ -13,10 +15,6 @@ jobs:
         id: go
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Run static checks
-        run: make static
-      - name: Test
-        run: make test
       - name: Build releases
         run: make releases
         if: startsWith(github.ref, 'refs/tags/')

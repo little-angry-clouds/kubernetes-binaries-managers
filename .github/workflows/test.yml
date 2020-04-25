@@ -1,0 +1,23 @@
+name: Test
+
+on: push
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Go 1.13
+        uses: actions/setup-go@v1
+        with:
+          go-version: 1.13
+        id: go
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+      - name: Run static checks
+        run: make static
+      - name: Run unit tests
+        run: make unit-test
+      - name: Run int tests
+        run: sudo add-apt-repository ppa:duggan/bats && sudo apt-get update && sudo apt-get install bats -y && make int-test

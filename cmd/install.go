@@ -8,7 +8,13 @@ import (
 	"runtime"
 	"strings"
 
+	"math/rand"
+	"strconv"
+
+	"time"
+
 	. "github.com/little-angry-clouds/kubernetes-binaries-managers/internal/helpers"
+	"github.com/mholt/archiver/v3"
 	"github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 )
@@ -121,7 +127,44 @@ func downloadBinary(version string) ([]byte, error) {
 }
 
 func saveBinary(fileName string, body []byte) error {
-	err := ioutil.WriteFile(fileName, body, 0750)
+	var err error
+
+	// helm returns a tar.gz, so save it somewhere and decompress it
+	if strings.Contains(fileName, "helm") {
+		rand.Seed(time.Now().UnixNano())
+
+		randomNumbers := 5000
+		tempDir, err := ioutil.TempDir("", "helm")
+
+		if err != nil {
+			return err
+		}
+		// clean temp dir
+		defer os.RemoveAll(tempDir)
+		file := fmt.Sprintf("%s/helm-%s", tempDir, strconv.Itoa(rand.Intn(randomNumbers)))
+		fileExt := ".tar.gz"
+		err = ioutil.WriteFile(file+fileExt, body, 0750)
+
+		if err != nil {
+			return err
+		}
+
+		err = archiver.Unarchive(file+fileExt, file)
+		if err != nil {
+			return err
+		}
+
+		osArch, _ := getOsArch()
+		OS := strings.Split(osArch, "/")[0]
+		arch := strings.Split(osArch, "/")[1]
+		body, err = ioutil.ReadFile(file + fmt.Sprintf("/%s-%s/helm", OS, arch))
+
+		if err != nil {
+			return err
+		}
+	}
+
+	err = ioutil.WriteFile(fileName, body, 0750)
 
 	if err != nil {
 		return err

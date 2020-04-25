@@ -30,8 +30,11 @@ static: | $(GOLANGCI-LINT) $(GOPHERBADGER)
 	$(GOLANGCI-LINT) run ./...
 	$(GOPHERBADGER) -md="README.md"
 
-test:
+unit-test:
 	go test -coverprofile cover.out ./...
+
+int-test:
+	bats tests/test
 
 PLATFORMS := linux-amd64 linux-386 darwin-amd64 darwin-386 windows-amd64 windows-386
 temp = $(subst -, ,$@)
