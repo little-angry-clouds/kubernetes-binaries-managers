@@ -37,7 +37,7 @@ page](https://github.com/little-angry-clouds/kubernetes-binaries-managers/releas
 and download the version you want. For example:
 
 ```bash
-wget https://github.com/little-angry-clouds/kubernetes-binaries-managers/releases/download/0.0.1/kbenv-linux-amd64.tar.gz
+wget https://github.com/little-angry-clouds/kubernetes-binaries-managers/releases/download/0.0.2/kbenv-linux-amd64.tar.gz
 tar xzf kbenv-linux-amd64.tar.gz
 mv kbenv-linux-amd64 ~/.bin/kbenv
 ```
