@@ -18,12 +18,14 @@ Currently helmenv supports the following OSes
 
 ## Installation
 
-1. Add `~/.bin` to your `$PATH`
+1. Add `~/.bin` to your `$PATH` and create it if doesn't exist
 
 ```bash
 echo 'export PATH="$HOME/.bin:$PATH"' >> ~/.bashrc
 # Or
 echo 'export PATH="$HOME/.bin:$PATH"' >> ~/.zshrc
+
+mkdir -p ~/.bin
 ```
 
 For Windows you should do the weird stuff that it needs to to set an environmental variable.
@@ -35,7 +37,7 @@ page](https://github.com/little-angry-clouds/kubernetes-binaries-managers/releas
 and download the version you want. For example:
 
 ```bash
-wget https://github.com/little-angry-clouds/kubernetes-binaries-managers/releases/download/0.0.1/helmenv-linux-amd64.tar.gz
+wget https://github.com/little-angry-clouds/kubernetes-binaries-managers/releases/download/0.0.2/helmenv-linux-amd64.tar.gz
 tar xzf helmenv-linux-amd64.tar.gz
 mv helmenv-linux-amd64 ~/.bin/helmenv
 ```
