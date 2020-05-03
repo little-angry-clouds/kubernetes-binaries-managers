@@ -1,4 +1,4 @@
-package cmd
+package versions
 
 import (
 	"fmt"
@@ -8,6 +8,7 @@ import (
 	"os"
 	"testing"
 
+	. "github.com/little-angry-clouds/kubernetes-binaries-managers/internal/helpers"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -26,7 +27,7 @@ func TestGetLastPage(t *testing.T) {
 	for _, tt := range flagtests {
 		tt := tt
 		t.Run(tt.input, func(t *testing.T) {
-			actualLastPage, err := getLastPage(tt.input)
+			actualLastPage, err := GetLastPage(tt.input)
 			expectedLastPage := tt.expected
 			assert.Nil(t, err)
 			assert.Equal(t, expectedLastPage, actualLastPage)
@@ -93,7 +94,7 @@ func TestGetVersions(t *testing.T) { // nolint: funlen
 			}))
 			defer server.Close()
 
-			r, err := getVersions(server.URL + "/?page=")
+			r, err := GetRemoteVersions(server.URL + "/?page=")
 			assert.Nil(t, err)
 			expectedVersions := tt.expected
 			receivedVersions := make([]string, len(r))
