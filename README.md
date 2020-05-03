@@ -8,4 +8,4 @@ A couple of kubernetes binaries manager.
 
 - [Kubectl version manager](./kbenv/README.md)
 
-- [Helm version manager](./helmnv/README.md)
+- [Helm version manager](./helmenv/README.md)
