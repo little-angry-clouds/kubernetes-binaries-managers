@@ -35,7 +35,7 @@ func TestGetLastPage(t *testing.T) {
 	}
 }
 
-func TestGetVersions(t *testing.T) { // nolint: funlen
+func TestGetRemoteVersions(t *testing.T) { // nolint: funlen
 	var flagtests = []struct {
 		testName string
 		input    string
