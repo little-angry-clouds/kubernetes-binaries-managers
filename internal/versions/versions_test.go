@@ -14,7 +14,7 @@ import (
 
 func TestGetLastPage(t *testing.T) {
 	var flagtests = []struct {
-		name     string
+		testName string
 		input    string
 		expected int
 	}{
@@ -26,7 +26,7 @@ func TestGetLastPage(t *testing.T) {
 
 	for _, tt := range flagtests {
 		tt := tt
-		t.Run(tt.input, func(t *testing.T) {
+		t.Run(tt.testName, func(t *testing.T) {
 			actualLastPage, err := GetLastPage(tt.input)
 			expectedLastPage := tt.expected
 			assert.Nil(t, err)
