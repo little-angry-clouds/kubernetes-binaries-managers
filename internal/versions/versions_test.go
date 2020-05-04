@@ -84,7 +84,6 @@ func TestGetRemoteVersions(t *testing.T) { // nolint: funlen
 				link := fmt.Sprintf(
 					"<https://api.github.com/repositories/20580498/releases?per_page=20&page=1>; rel=\"next\", <https://api.github.com/repositories/20580498/releases?per_page=20&page=%s>; rel=\"last\"", // nolint: lll
 					tt.input)
-				t.Log(link)
 				rw.Header().Set("Content-Type", "application/json")
 				rw.Header().Set("Link", link)
 				_, err = rw.Write(jsonBytes)
