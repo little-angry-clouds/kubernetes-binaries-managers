@@ -10,6 +10,7 @@ import (
 
 	"github.com/hashicorp/go-version"
 	. "github.com/little-angry-clouds/kubernetes-binaries-managers/internal/helpers"
+	"github.com/mitchellh/go-homedir"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -220,6 +221,57 @@ func TestGetRemoteVersions(t *testing.T) { // nolint: funlen
 				receivedVersions[i] = v
 			}
 			assert.Equal(t, expectedVersions, receivedVersions)
+		})
+	}
+}
+
+func TestGetLocalVersions(t *testing.T) {
+	var flagtests = []struct {
+		testName string
+		input    []string
+		expected []string
+	}{
+		{
+			"all releases",
+			[]string{
+				"1.17.5", "1.18.2", "1.16.9", "1.18.1", "1.18.0",
+				"1.15.11", "1.17.4", "1.16.8", "1.15.10", "1.16.7",
+				"1.17.3", "1.15.9", "1.17.2", "1.16.6", "1.16.0-alpha.1",
+				"1.3.0-alpha.3", "1.6.0-beta.3", "1.13.5", "1.14.0-beta.1",
+				"1.13.0-alpha.1", "1.7.10", "1.15.1", "1.10.0-beta.2", "1.17.0-alpha.2",
+				"1.7.13", "1.9.2", "1.8.7", "1.9.1", "1.7.12", "1.8.6",
+			},
+			[]string{
+				"1.10.0-beta.2", "1.13.0-alpha.1", "1.13.5", "1.14.0-beta.1", "1.15.1",
+				"1.15.10", "1.15.11", "1.15.9", "1.16.0-alpha.1", "1.16.6",
+				"1.16.7", "1.16.8", "1.16.9", "1.17.0-alpha.2", "1.17.2",
+				"1.17.3", "1.17.4", "1.17.5", "1.18.0", "1.18.1",
+				"1.18.2", "1.3.0-alpha.3", "1.6.0-beta.3", "1.7.10", "1.7.12",
+				"1.7.13", "1.8.6", "1.8.7", "1.9.1", "1.9.2",
+			},
+		},
+	}
+
+	for _, tt := range flagtests {
+		tt := tt
+		t.Run(tt.testName, func(t *testing.T) {
+			expectedVersions := tt.expected
+			receivedVersions := tt.input
+			binaryName := "binaryTest"
+			home, _ := homedir.Dir()
+			for _, value := range receivedVersions {
+				binary := fmt.Sprintf("%s/.bin/%s-v%s", home, binaryName, value)
+				_, _ = os.Create(binary)
+				defer os.Remove(binary)
+			}
+			actualVersionsVrs, err := GetLocalVersions(binaryName)
+			actualVersionsStr := make([]string, len(actualVersionsVrs))
+			for i, raw := range actualVersionsVrs {
+				v := fmt.Sprintf("%v", raw)
+				actualVersionsStr[i] = v
+			}
+			assert.Nil(t, err)
+			assert.Equal(t, expectedVersions, actualVersionsStr)
 		})
 	}
 }
