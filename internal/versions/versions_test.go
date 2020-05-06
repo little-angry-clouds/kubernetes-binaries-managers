@@ -259,6 +259,7 @@ func TestGetLocalVersions(t *testing.T) {
 			receivedVersions := tt.input
 			binaryName := "binaryTest"
 			home, _ := homedir.Dir()
+			t.Log(home)
 			for _, value := range receivedVersions {
 				binary := fmt.Sprintf("%s/.bin/%s-v%s", home, binaryName, value)
 				_, _ = os.Create(binary)
