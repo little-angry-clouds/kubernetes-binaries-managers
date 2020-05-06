@@ -263,7 +263,7 @@ func TestGetLocalVersions(t *testing.T) {
 			binDir := fmt.Sprintf("%s/.bin", home)
 			t.Log(binDir)
 			if _, err := os.Stat(binDir); os.IsNotExist(err) {
-				err = os.Mkdir(binDir, 777)
+				err = os.Mkdir(binDir, 0755)
 				t.Log(err)
 				defer os.Remove(binDir)
 			}
