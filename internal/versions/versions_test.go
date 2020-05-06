@@ -261,9 +261,12 @@ func TestGetLocalVersions(t *testing.T) {
 			home, _ := homedir.Dir()
 			t.Log(home)
 			for _, value := range receivedVersions {
-				binary := fmt.Sprintf("%s/.bin/%s-v%s", home, binaryName, value)
+				binDir := fmt.Sprintf("%s/.bin/", home)
+				_ = os.Mkdir(binDir, 755)
+				binary := fmt.Sprintf("%s/%s-v%s", binDir, binaryName, value)
 				_, _ = os.Create(binary)
 				defer os.Remove(binary)
+				t.Log(binary)
 			}
 			actualVersionsVrs, err := GetLocalVersions(binaryName)
 			actualVersionsStr := make([]string, len(actualVersionsVrs))

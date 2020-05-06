@@ -15,9 +15,9 @@ jobs:
         uses: actions/checkout@v2
         with:
           submodules: recursive
-      - name: Run static checks
-        run: make static
       - name: Run unit tests
         run: make unit-test
       - name: Run int tests
         run: sudo add-apt-repository ppa:duggan/bats && sudo apt-get update && sudo apt-get install bats -y && make int-test
+      - name: Run static checks
+        run: make static
