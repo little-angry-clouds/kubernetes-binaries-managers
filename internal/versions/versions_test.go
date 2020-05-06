@@ -271,7 +271,9 @@ func TestGetLocalVersions(t *testing.T) {
 				defer os.Remove(binary)
 				t.Log(err)
 			}
-			files, _ := ioutil.ReadDir(binDir)
+			files, err := ioutil.ReadDir(binDir)
+			t.Log(files)
+			t.Log(err)
 			for _, f := range files {
 				t.Log(f.Name())
 			}
