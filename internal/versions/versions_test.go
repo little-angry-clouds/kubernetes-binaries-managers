@@ -251,22 +251,24 @@ func TestGetLocalVersions(t *testing.T) {
 			},
 		},
 	}
-
 	for _, tt := range flagtests {
 		tt := tt
 		t.Run(tt.testName, func(t *testing.T) {
+			var err error
 			expectedVersions := tt.expected
 			receivedVersions := tt.input
 			binaryName := "binaryTest"
-			home, _ := homedir.Dir()
+			home, err := homedir.Dir()
+			t.Log(err)
 			binDir := fmt.Sprintf("%s/.bin", home)
 			t.Log(home)
 			for _, value := range receivedVersions {
-				_ = os.Mkdir(binDir, 755)
+				err = os.Mkdir(binDir, 755)
+				t.Log(err)
 				binary := fmt.Sprintf("%s/%s-v%s", binDir, binaryName, value)
-				_, _ = os.Create(binary)
+				_, err := os.Create(binary)
 				defer os.Remove(binary)
-				t.Log(binary)
+				t.Log(err)
 			}
 			files, _ := ioutil.ReadDir(binDir)
 			for _, f := range files {
