@@ -266,6 +266,7 @@ func TestGetLocalVersions(t *testing.T) {
 			t.Log(err)
 			for _, value := range receivedVersions {
 				binary := fmt.Sprintf("%s/%s-v%s", binDir, binaryName, value)
+				t.Log(binary)
 				_, err := os.Create(binary)
 				defer os.Remove(binary)
 				t.Log(err)
