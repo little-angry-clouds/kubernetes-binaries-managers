@@ -267,9 +267,10 @@ func TestGetLocalVersions(t *testing.T) {
 			for _, value := range receivedVersions {
 				binary := fmt.Sprintf("%s/%s-v%s", binDir, binaryName, value)
 				t.Log(binary)
-				_, err := os.Create(binary)
-				defer os.Remove(binary)
+				b := []byte("")
+				err = ioutil.WriteFile(binary, b, 0644)
 				t.Log(err)
+				defer os.Remove(binary)
 			}
 			files, err := ioutil.ReadDir(binDir)
 			t.Log(files)
