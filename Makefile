@@ -31,7 +31,7 @@ static: | $(GOLANGCI-LINT) $(GOPHERBADGER)
 	$(GOPHERBADGER) -md="README.md"
 
 unit-test:
-	go test ./... -v
+	go test ./...
 
 int-test:
 	bats tests/test

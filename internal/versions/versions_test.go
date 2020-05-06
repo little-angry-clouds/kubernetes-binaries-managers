@@ -111,19 +111,25 @@ func TestSortVersions(t *testing.T) { // nolint: funlen
 	for _, tt := range flagtests {
 		tt := tt
 		t.Run(tt.testName, func(t *testing.T) {
+			var err error
 			expectedVersionsStr := tt.output
 			receivedVersionsStr := tt.input
 			receivedVersionsVrs := make([]*version.Version, len(tt.input))
 			for i, raw := range receivedVersionsStr {
-				v, _ := version.NewVersion(raw)
+				v, err := version.NewVersion(raw)
+				if err != nil {
+					t.Log(fmt.Sprintf("NewVersion error: %s", err))
+				}
 				receivedVersionsVrs[i] = v
 			}
+			t.Log(fmt.Sprintf("receivedVersionsStr: %s", receivedVersionsStr))
 			actualVersionsVrs, err := SortVersions(receivedVersionsVrs, tt.allReleases, tt.allVersions)
 			actualVersionsStr := make([]string, len(actualVersionsVrs))
 			for i, raw := range actualVersionsVrs {
 				v := fmt.Sprintf("%v", raw)
 				actualVersionsStr[i] = v
 			}
+			t.Log(fmt.Sprintf("actualVersionsVrs: %s", actualVersionsVrs))
 			assert.Nil(t, err)
 			assert.Equal(t, expectedVersionsStr, actualVersionsStr)
 			assert.Equal(t, tt.versionsLength, len(actualVersionsStr))
@@ -146,6 +152,7 @@ func TestGetLastPage(t *testing.T) {
 	for _, tt := range flagtests {
 		tt := tt
 		t.Run(tt.testName, func(t *testing.T) {
+			var err error
 			actualLastPage, err := GetLastPage(tt.input)
 			expectedLastPage := tt.expected
 			assert.Nil(t, err)
@@ -190,33 +197,37 @@ func TestGetRemoteVersions(t *testing.T) { // nolint: funlen
 		t.Run(tt.testName, func(t *testing.T) {
 			server := httptest.NewServer(http.HandlerFunc(func(rw http.ResponseWriter, req *http.Request) {
 				page := req.URL.Query()["page"][0]
+				t.Log(fmt.Sprintf("page: %s", page))
 				fakeResponse := fmt.Sprintf("test_data/page_%s", page)
+				t.Log(fmt.Sprintf("fakeResponse file: %s", fakeResponse))
 				jsonFile, err := os.Open(fakeResponse)
 				if err != nil {
-					return
+					t.Log(fmt.Sprintf("open file error: %s", err))
 				}
 				defer jsonFile.Close()
 				jsonBytes, err := ioutil.ReadAll(jsonFile)
 				if err != nil {
-					return
+					t.Log(fmt.Sprintf("read file as bytes error: %s", err))
 				}
 				link := fmt.Sprintf(
 					"<https://api.github.com/repositories/20580498/releases?per_page=20&page=1>; rel=\"next\", <https://api.github.com/repositories/20580498/releases?per_page=20&page=%s>; rel=\"last\"", // nolint: lll
 					tt.input)
+				t.Log(fmt.Sprintf("link: %s", link))
 				rw.Header().Set("Content-Type", "application/json")
 				rw.Header().Set("Link", link)
 				_, err = rw.Write(jsonBytes)
 				if err != nil {
-					return
+					t.Log(fmt.Sprintf("write http response error: %s", err))
 				}
 			}))
 			defer server.Close()
 
-			r, err := GetRemoteVersions(server.URL + "/?page=")
+			remoteVersions, err := GetRemoteVersions(server.URL + "/?page=")
+			t.Log(fmt.Sprintf("remoteVersions: %s", remoteVersions))
 			assert.Nil(t, err)
 			expectedVersions := tt.expected
-			receivedVersions := make([]string, len(r))
-			for i, raw := range r {
+			receivedVersions := make([]string, len(remoteVersions))
+			for i, raw := range remoteVersions {
 				v := fmt.Sprintf("%v", raw)
 				receivedVersions[i] = v
 			}
@@ -259,31 +270,32 @@ func TestGetLocalVersions(t *testing.T) {
 			receivedVersions := tt.input
 			binaryName := "binaryTest"
 			home, err := homedir.Dir()
-			t.Log(err)
+			t.Log(fmt.Sprintf("home: %s", home))
+			if err != nil {
+				t.Log(fmt.Sprintf("home error: %s", err))
+			}
 			binDir := fmt.Sprintf("%s/.bin", home)
-			t.Log(binDir)
+			t.Log(fmt.Sprintf("binDir: %s", binDir))
 			if _, err := os.Stat(binDir); os.IsNotExist(err) {
 				err = os.Mkdir(binDir, 0755)
-				t.Log(err)
+				if err != nil {
+					t.Log(fmt.Sprintf("mkdir error: %s", err))
+				}
 				defer os.Remove(binDir)
 			}
-			t.Log(err)
 			for _, value := range receivedVersions {
 				binary := fmt.Sprintf("%s/%s-v%s", binDir, binaryName, value)
-				t.Log(binary)
 				err = ioutil.WriteFile(binary, []byte(""), 0644)
-				t.Log(err)
+				if err != nil {
+					t.Log(fmt.Sprintf("WriteFile error: %s", err))
+				}
 				defer os.Remove(binary)
 			}
-			files, err := ioutil.ReadDir(binDir)
-			t.Log(files)
-			t.Log(err)
-			for _, f := range files {
-				t.Log(f.Name())
-			}
 			actualVersionsVrs, err := GetLocalVersions(binaryName)
-			t.Log(actualVersionsVrs)
-			t.Log(err)
+			if err != nil {
+				t.Log(fmt.Sprintf("actualVersionsVrs error: %s", err))
+			}
+			t.Log(fmt.Sprintf("GetLocalVersions: %s", actualVersionsVrs))
 			actualVersionsStr := make([]string, len(actualVersionsVrs))
 			for i, raw := range actualVersionsVrs {
 				v := fmt.Sprintf("%v", raw)
