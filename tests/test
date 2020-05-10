@@ -4,19 +4,11 @@ load "lib/bats-support/load"
 load "lib/bats-assert/load"
 
 function setup() {
-  # Create the cluster only in first test
   if [[ "$BATS_TEST_NUMBER" -eq 1 ]]
   then
-    make clean
     make build
   fi
-}
-
-function teardown() {
-  if [[ "$BATS_TEST_NUMBER" -eq "${#BATS_TEST_NAMES[@]}" ]]
-  then
-    make clean
-  fi
+  export PATH=$PATH:/home/$(whoami)/.bin/
 }
 
 @test "list remote versions" {
@@ -60,14 +52,14 @@ function teardown() {
   run ./bin/kbenv install 1.18.1
   run ./bin/helmenv install 3.2.0
 
-  run ./bin/kbenv use 1.17.1
-  assert_output --partial "Done! Using 1.17.1 version."
+  run ./bin/kbenv use 1.18.1
+  assert_output --partial "Done! Using 1.18.1 version."
   run ./bin/helmenv use 3.2.0
   assert_output --partial "Done! Using 3.2.0 version."
 
-  run $HOME/.bin/kubectl-v1.18.1 version --client
+  run ./bin/kubectl-wrapper version --client
   assert_output --partial "Client Version: version.Info{Major:\"1\", Minor:\"18\", GitVersion:\"v1.18.1\", GitCommit:\"7879fc12a63337efff607952a323df90cdc7a335\", GitTreeState:\"clean\", BuildDate:\"2020-04-08T17:38:50Z\", GoVersion:\"go1.13.9\", Compiler:\"gc\", Platform:\"linux/amd64\"}"
-  run $HOME/.bin/helm-v3.2.0 version --client
+  run ./bin/helm-wrapper version --client
   assert_output --partial "version.BuildInfo{Version:\"v3.2.0\", GitCommit:\"e11b7ce3b12db2941e90399e874513fbd24bcb71\", GitTreeState:\"clean\", GoVersion:\"go1.13.10\"}"
   run ./bin/kbenv uninstall 1.18.2
   run ./bin/helmenv uninstall 3.2.0
