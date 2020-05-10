@@ -23,8 +23,8 @@ build:
 	go build -a -o bin/kbenv kbenv/main.go
 
 clean:
-	-rm bin/*
-	-rm releases/*
+	-rm -r bin/
+	-rm -r releases/
 
 static: | $(GOLANGCI-LINT) $(GOPHERBADGER)
 	$(GOLANGCI-LINT) run ./...
