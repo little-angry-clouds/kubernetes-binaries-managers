@@ -236,7 +236,7 @@ func TestGetRemoteVersions(t *testing.T) { // nolint: funlen
 	}
 }
 
-func TestGetLocalVersions(t *testing.T) {
+func TestGetLocalVersions(t *testing.T) { // nolint: funlen
 	var flagtests = []struct {
 		testName string
 		input    []string
@@ -262,6 +262,7 @@ func TestGetLocalVersions(t *testing.T) {
 			},
 		},
 	}
+
 	for _, tt := range flagtests {
 		tt := tt
 		t.Run(tt.testName, func(t *testing.T) {
