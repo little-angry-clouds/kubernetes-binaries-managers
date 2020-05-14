@@ -17,6 +17,7 @@ func Wrapper(binName string) {
 	var localVersion string = fmt.Sprintf(".%s_version", binName)
 	var rawVersion []byte
 	var finalVersion string
+	var err error
 
 	if _, err := os.Stat(localVersion); err == nil {
 		rawVersion, err = ioutil.ReadFile(localVersion)
@@ -37,5 +38,9 @@ func Wrapper(binName string) {
 	cmd := exec.Command(fmt.Sprintf("%s-v%s", binName, finalVersion), os.Args[1:]...) // nolint: gosec
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
-	_ = cmd.Run()
+	err = cmd.Run()
+
+	if err != nil {
+		fmt.Printf("Error detected: %s\n", err)
+	}
 }
