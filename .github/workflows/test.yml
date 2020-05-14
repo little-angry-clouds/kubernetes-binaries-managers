@@ -1,4 +1,4 @@
-name: Test
+name: Main flow
 
 on: push
 
@@ -21,3 +21,13 @@ jobs:
         run: sudo add-apt-repository ppa:duggan/bats && sudo apt-get update && sudo apt-get install bats -y && make int-test
       - name: Run static checks
         run: make static
+      - name: Build releases
+        run: make releases
+        if: startsWith(github.ref, 'refs/tags/')
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          files: releases/*.tar.gz
