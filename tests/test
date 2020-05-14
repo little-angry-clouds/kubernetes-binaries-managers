@@ -4,7 +4,7 @@ load "lib/bats-support/load"
 load "lib/bats-assert/load"
 
 function setup() {
-  if [[ "$BATS_TEST_NUMBER" -eq 1 ]]
+  if [[ ! -e ./bin/kbenv ]]
   then
     make build
   fi
