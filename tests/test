@@ -58,9 +58,9 @@ function setup() {
   assert_output --partial "Done! Using 3.2.0 version."
 
   run ./bin/kubectl-wrapper version --client
-  assert_output --partial 'Client Version: version.Info{Major:"1", Minor:"18", GitVersion:"v1.18.1", GitCommit:"7879fc12a63337efff607952a323df90cdc7a335", GitTreeState:"clean", BuildDate:"2020-04-08T17:38:50Z", GoVersion:"go1.13.9", Compiler:"gc", Platform:"linux/amd64"}'
+  assert_output --partial 'GitVersion:"v1.18.1"'
   run ./bin/helm-wrapper version --client
-  assert_output --partial 'version.BuildInfo{Version:"v3.2.0", GitCommit:"e11b7ce3b12db2941e90399e874513fbd24bcb71", GitTreeState:"clean", GoVersion:"go1.13.10"}'
+  assert_output --partial 'Version:"v3.2.0"'
   run ./bin/kbenv uninstall 1.18.2
   run ./bin/helmenv uninstall 3.2.0
 }
