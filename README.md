@@ -6,6 +6,6 @@ A couple of kubernetes binaries manager.
 <a href='https://github.com/jpoles1/gopherbadger' target='_blank'>![gopherbadger-tag-do-not-edit](https://img.shields.io/badge/Go%20Coverage-85%25-brightgreen.svg?longCache=true&style=flat)</a>
 ![Main](https://github.com/little-angry-clouds/kubernetes-binaries-managers/workflows/Main/badge.svg)
 
-- [Kubectl version manager](./kbenv/README.md)
+- [Kubectl version manager](./cmd/kbenv/README.md)
 
-- [Helm version manager](./helmenv/README.md)
+- [Helm version manager](./cmd/helmenv/README.md)
