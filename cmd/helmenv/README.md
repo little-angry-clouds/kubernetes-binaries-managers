@@ -18,6 +18,43 @@ Currently helmenv supports the following OSes
 
 ## Installation
 
+There's to components in `helmenv`. One is the `helmenv` binary, the other one
+is a `helm` wrapper. It works as if were `helm`, but it has some logic to choose
+the version to execute. Yo should take care and ensure that you don't have any
+`helm` binary in your path. To check which binary you're executing, you can see
+it with:
+
+``` bash
+$ which helm
+/opt/brew/bin/helm
+```
+
+### Homebrew
+
+This is the recomended way, since it provides upgrades. It should work in Mac,
+Linux and Windows with WSL.
+
+``` bash
+# Just the first time, activate the repository
+brew tap little-angry-clouds/homebrew-my-brews
+# To install
+brew install helmenv
+# To upgrade
+brew upgrade helmenv
+```
+
+You should add your `homebrew` binary path to your PATH:
+
+``` bash
+echo 'export PATH="$(brew --prefix)/bin/:$PATH"' >> ~/.bashrc
+# Or
+echo 'export PATH="$(brew --prefix)/bin/:$PATH"' >> ~/.zshrc
+```
+
+For Windows you should do the weird stuff that it needs to to set an environmental variable.
+
+### Manually
+
 1. Add `~/.bin` to your `$PATH` and create it if doesn't exist
 
 ```bash
@@ -30,16 +67,17 @@ mkdir -p ~/.bin
 
 For Windows you should do the weird stuff that it needs to to set an environmental variable.
 
-2. Download the binary and put it on your path
+2. Download the binaries and put them on your path
 
 Go to [the releases
 page](https://github.com/little-angry-clouds/kubernetes-binaries-managers/releases)
 and download the version you want. For example:
 
 ```bash
-wget https://github.com/little-angry-clouds/kubernetes-binaries-managers/releases/download/0.0.2/helmenv-linux-amd64.tar.gz
+wget https://github.com/little-angry-clouds/kubernetes-binaries-managers/releases/download/0.0.4/helmenv-linux-amd64.tar.gz
 tar xzf helmenv-linux-amd64.tar.gz
 mv helmenv-linux-amd64 ~/.bin/helmenv
+mv helm-wrapper-linux-amd64 ~/.bin/helm
 ```
 
 And that's it!

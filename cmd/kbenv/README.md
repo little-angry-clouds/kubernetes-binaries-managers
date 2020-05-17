@@ -18,6 +18,43 @@ Currently kbenv supports the following OSes
 
 ## Installation
 
+There's to components in `kbenv`. One is the `kbenv` binary, the other one
+is a `kubectl` wrapper. It works as if were `kubectl`, but it has some logic to choose
+the version to execute. Yo should take care and ensure that you don't have any
+`kubectl` binary in your path. To check which binary you're executing, you can see
+it with:
+
+``` bash
+$ which kubectl
+/opt/brew/bin/kubectl
+```
+
+### Homebrew
+
+This is the recomended way, since it provides upgrades. It should work in Mac,
+Linux and Windows with WSL.
+
+``` bash
+# Just the first time, activate the repository
+brew tap little-angry-clouds/homebrew-my-brews
+# To install
+brew install kbenv
+# To upgrade
+brew upgrade kbenv
+```
+
+You should add your `homebrew` binary path to your PATH:
+
+``` bash
+echo 'export PATH="$(brew --prefix)/bin/:$PATH"' >> ~/.bashrc
+# Or
+echo 'export PATH="$(brew --prefix)/bin/:$PATH"' >> ~/.zshrc
+```
+
+For Windows you should do the weird stuff that it needs to to set an environmental variable.
+
+### Manually
+
 1. Add `~/.bin` to your `$PATH` and create it if doesn't exist
 
 ```bash
@@ -30,16 +67,17 @@ mkdir -p ~/.bin
 
 For Windows you should do the weird stuff that it needs to to set an environmental variable.
 
-2. Download the binary and put it on your path
+2. Download the binaries and put them on your path
 
 Go to [the releases
 page](https://github.com/little-angry-clouds/kubernetes-binaries-managers/releases)
 and download the version you want. For example:
 
 ```bash
-wget https://github.com/little-angry-clouds/kubernetes-binaries-managers/releases/download/0.0.2/kbenv-linux-amd64.tar.gz
+wget https://github.com/little-angry-clouds/kubernetes-binaries-managers/releases/download/0.0.4/kbenv-linux-amd64.tar.gz
 tar xzf kbenv-linux-amd64.tar.gz
 mv kbenv-linux-amd64 ~/.bin/kbenv
+mv kubectl-wrapper-linux-amd64 ~/.bin/kubectl
 ```
 
 And that's it!
@@ -116,16 +154,13 @@ began to grow a little. And then they came some PR for different stuff, but the
 hard ones where the ones for adding better support for MacOS. I don't own a Mac,
 so I couldn't test them properly.
 
-Also, `kbenv` and `kbenv` where pretty much a copy paste, but they didn't have
+Also, `helmenv` and `kbenv` where pretty much a copy paste, but they didn't have
 the same code, so any change from one place I would have to add it to the other.
 
 So, with this to problems (and because I was bored) I decided to migrate them
 for Go. Go is cool because it lets you have self contained binaries, so no more
-worries about the OS! I even add support for Windows, because why not. I only
-had to do a little specific development for Windows be able to use the
-`.kbenv_version` file, but it was'nt traumatic. And also, being Go a real
-programming language, I could add tests. Not that there's any right now, but I'm
-on it.
+worries about the OS! I even add support for Windows, because why not. And also,
+being Go a real programming language, I could add tests.
 
 ### How to migrate from the bash version
 For doing so you have to:
