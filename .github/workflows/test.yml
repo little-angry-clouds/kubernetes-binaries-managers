@@ -1,4 +1,4 @@
-name: Test
+name: Main flow
 
 on: push
 
@@ -21,3 +21,20 @@ jobs:
         run: sudo add-apt-repository ppa:duggan/bats && sudo apt-get update && sudo apt-get install bats -y && make int-test
       - name: Run static checks
         run: make static
+      - name: Build releases
+        run: make releases
+        if: startsWith(github.ref, 'refs/tags/')
+      - name: Fetch remote references
+        run: |
+          git fetch --no-tags --prune --depth=1 origin +refs/heads/*:refs/remotes/origin/*
+      - name: Generate Changelog
+        run: git diff origin/master HEAD --no-ext-diff --unified=0 --exit-code -a --no-prefix CHANGELOG.md | egrep "^\+" | tail -n +2 | sed "s/^+//g" > "${{ github.workflow }}-CHANGELOG.txt"
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          body_path: "${{ github.workflow }}-CHANGELOG.txt"
+          files: releases/*.tar.gz
+          draft: true

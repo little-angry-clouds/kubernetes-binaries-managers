@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"github.com/little-angry-clouds/kubernetes-binaries-managers/cmd"
+	"github.com/little-angry-clouds/kubernetes-binaries-managers/internal/cmd"
 	"github.com/mitchellh/go-homedir"
 )
 
