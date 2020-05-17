@@ -40,7 +40,7 @@ func Wrapper(binName string) {
 	cmd.Stderr = os.Stderr
 	err = cmd.Run()
 
-	if err != nil {
-		fmt.Printf("Error detected: %s\n", err)
+	if strings.Contains(err.Error(), "executable file not found in $PATH") {
+		fmt.Printf("%s\n", err)
 	}
 }
