@@ -70,6 +70,6 @@ function setup() {
   assert_output --partial 'GitVersion:"v1.18.1"'
   run ./bin/helm-wrapper version --client
   assert_output --partial 'Version:"v3.2.0"'
-  run ./bin/kbenv uninstall 1.18.2
+  run ./bin/kbenv uninstall 1.18.1
   run ./bin/helmenv uninstall 3.2.0
 }
