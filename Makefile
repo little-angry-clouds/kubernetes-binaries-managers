@@ -1,4 +1,4 @@
-# Create base for installin binaries
+# Create base for installing binaries
 BIN = $(CURDIR)/bin
 $(BIN):
 	@mkdir -p $@
