@@ -4,7 +4,16 @@ load "lib/bats-support/load"
 load "lib/bats-assert/load"
 
 function setup() {
-  if [[ ! -e ./bin/kbenv ]]
+  if [[ ! -e ./bin/kbenv  ]]
+  then
+    make build
+  elif [[ ! -e ./bin/helmenv ]]
+  then
+    make build
+  elif [[ ! -e ./bin/kubectl-wrapper ]]
+  then
+    make build
+  elif [[ ! -e ./bin/helm-wrapper ]]
   then
     make build
   fi
