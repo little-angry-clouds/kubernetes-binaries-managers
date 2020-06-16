@@ -17,6 +17,7 @@ jobs:
           submodules: recursive
       - name: Run unit tests
         run: make unit-test
+      - uses: engineerd/setup-kind@v0.4.0
       - name: Run int tests
         run: sudo add-apt-repository ppa:duggan/bats && sudo apt-get update && sudo apt-get install bats -y && make int-test
       - name: Run static checks

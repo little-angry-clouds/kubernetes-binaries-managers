@@ -73,3 +73,26 @@ function setup() {
   run ./bin/kbenv uninstall 1.18.1
   run ./bin/helmenv uninstall 3.2.0
 }
+
+@test "apply" {
+  if [[ "$KIND_CREATE_CLUSTER" == "true" ]]
+  then
+    export PATH=$(pwd)/bin:$PATH
+    teardownCallback=$(create_cluster)
+  fi
+
+  run ./bin/kbenv install 1.18.1
+  run ./bin/kubectl-wrapper create deployment hello-node --image=k8s.gcr.io/echoserver:1.4
+  assert_success
+  pod=$(./bin/kubectl-wrapper get pod -l app=hello-node -o=custom-columns=:.metadata.name | tail -n1)
+  run ./bin/kubectl-wrapper rollout status deploy hello-node
+  run ./bin/kubectl-wrapper exec "$pod" -- ls
+  assert_success
+  refute_output --partial "Unable to use a TTY"
+  run ./bin/kbenv uninstall 1.18.1
+
+  if [[ "$KIND_CREATE_CLUSTER" == "true" ]]
+  then
+    eval "$teardownCallback"
+  fi
+}

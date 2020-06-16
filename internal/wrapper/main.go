@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
-	"os/exec"
 	"strings"
+	"syscall"
 
 	"github.com/mitchellh/go-homedir"
 )
@@ -34,15 +34,11 @@ func Wrapper(binName string) {
 	}
 
 	finalVersion = strings.Trim(string(rawVersion), "\n")
-
-	cmd := exec.Command(fmt.Sprintf("%s-v%s", binName, finalVersion), os.Args[1:]...) // nolint: gosec
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	err = cmd.Run()
+	bin := fmt.Sprintf("%s/%s-v%s", binPath, binName, finalVersion)
+	args := append([]string{bin}, os.Args[1:]...)
+	err = syscall.Exec(bin, args, os.Environ()) // golint: nosec
 
 	if err != nil {
-		if strings.Contains(err.Error(), "executable file not found in $PATH") {
-			fmt.Printf("%s\n", err)
-		}
+		fmt.Printf("%s\n", err)
 	}
 }
