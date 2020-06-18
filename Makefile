@@ -1,4 +1,4 @@
-# Create base for installin binaries
+# Create base for installing binaries
 BIN = $(CURDIR)/bin
 $(BIN):
 	@mkdir -p $@
@@ -6,10 +6,14 @@ $(BIN)/golangci-lint: | $(BIN)
 	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.24.0
 $(BIN)/gopherbadger: | $(BIN)
 	GOBIN=$(BIN) go get github.com/jpoles1/gopherbadger
+$(BIN)/kind: | $(BIN)
+	curl -Lo $(BIN)/kind https://kind.sigs.k8s.io/dl/v0.8.1/kind-$$(uname)-amd64; \
+	chmod +x $(BIN)/kind
 
 # Binaries to install
 GOLANGCI-LINT = $(BIN)/golangci-lint
 GOPHERBADGER = $(BIN)/gopherbadger
+KIND = $(BIN)/kind
 
 ###############################################################################
 ###############################################################################
@@ -35,7 +39,7 @@ static: | $(GOLANGCI-LINT) $(GOPHERBADGER)
 unit-test:
 	go test ./...
 
-int-test:
+int-test: | $(KIND)
 	bats tests/test
 
 PLATFORMS := linux-amd64 linux-386 darwin-amd64 darwin-386 windows-amd64 windows-386
