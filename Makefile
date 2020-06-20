@@ -33,7 +33,7 @@ clean:
 	-rm -r releases/
 
 static: | $(GOLANGCI-LINT) $(GOPHERBADGER)
-	$(GOLANGCI-LINT) run ./...
+	$(GOLANGCI-LINT) run ./... --timeout 2m0s
 	$(GOPHERBADGER) -md="README.md"
 
 unit-test:
