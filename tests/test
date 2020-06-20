@@ -20,6 +20,7 @@ function setup() {
     make build
   fi
   export PATH=$PATH:/home/$(whoami)/.bin/
+  export PATH=$PATH:$(pwd)/bin/
 }
 
 @test "list remote versions" {
@@ -79,7 +80,6 @@ function setup() {
 @test "apply" {
   if [[ "$KIND_CREATE_CLUSTER" == "true" ]]
   then
-    export PATH=$(pwd)/bin:$PATH
     teardownCallback=$(create_cluster)
   fi
 
@@ -106,7 +106,6 @@ function setup() {
   then
     teardownCallback=$(create_cluster)
   fi
-  export PATH=$(pwd)/bin:$PATH
 
   run ./bin/kbenv use auto
   assert_success
