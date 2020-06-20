@@ -8,6 +8,9 @@ If you come from the kbenv bash version, you should read the [FAQ](#how-to-migra
 
 - Install kubectl versions in a reproducible and easy way
 - Enforce version in your git repositories with a `.kubectl_version` file
+- Use automatic mode and download the version that matches the detected
+  kubernetes cluster. Feature shamelessly copied from
+  [kuberlr](https://github.com/flavio/kuberlr).
 
 ## Supported OS
 
@@ -138,6 +141,14 @@ Done! Saving it at /home/user/.bin/kubectl-v1.16.5
 ```bash
 $ kbenv use 1.16.5
 Done! Using 1.16.5 version.
+```
+
+To use the automatic detection of the cluster and forget about it, just set it
+to `auto`:
+
+```bash
+$ kbenv use auto
+Done! Using auto version.
 ```
 
 ### Uninstall version
