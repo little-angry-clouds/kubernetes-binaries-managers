@@ -32,7 +32,9 @@ function setup() {
 
 @test "list local versions" {
   run ./bin/kbenv install 1.18.2
+  assert_success
   run ./bin/helmenv install 3.2.0
+  assert_success
 
   run ./bin/kbenv list local
   assert_output --partial "1.18.2"
@@ -42,7 +44,9 @@ function setup() {
 
 @test "install" {
   run ./bin/kbenv uninstall 1.18.2
+  assert_success
   run ./bin/helmenv uninstall 3.2.0
+  assert_success
 
   run ./bin/kbenv install 1.18.2
   assert_output --partial "Done! Saving it at"
@@ -50,13 +54,16 @@ function setup() {
   assert_output --partial "Done! Saving it at"
 
   run ./bin/kbenv uninstall 1.18.2
+  assert_success
   run ./bin/helmenv uninstall 3.2.0
-
+  assert_success
 }
 
 @test "uninstall" {
   run ./bin/kbenv install 1.18.2
+  assert_success
   run ./bin/helmenv install 3.2.0
+  assert_success
 
   run ./bin/kbenv uninstall 1.18.2
   assert_output --partial "Done! 1.18.2 version uninstalled from"
@@ -66,7 +73,9 @@ function setup() {
 
 @test "use" {
   run ./bin/kbenv install 1.18.1
+  assert_success
   run ./bin/helmenv install 3.2.0
+  assert_success
 
   run ./bin/kbenv use 1.18.1
   assert_output --partial "Done! Using 1.18.1 version."
@@ -78,5 +87,7 @@ function setup() {
   run ./bin/helm-wrapper version --client
   assert_output --partial 'Version:"v3.2.0"'
   run ./bin/kbenv uninstall 1.18.1
+  assert_success
   run ./bin/helmenv uninstall 3.2.0
+  assert_success
 }
