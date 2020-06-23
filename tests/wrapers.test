@@ -23,60 +23,6 @@ function setup() {
   export PATH=$PATH:$(pwd)/bin/
 }
 
-@test "list remote versions" {
-  run ./bin/kbenv list remote --all-versions
-  assert_output --partial "1.18.2"
-  run ./bin/helmenv list remote --all-versions
-  assert_output --partial "3.2.0"
-}
-
-@test "list local versions" {
-  run ./bin/kbenv install 1.18.2
-  run ./bin/helmenv install 3.2.0
-
-  run ./bin/kbenv list local
-  assert_output --partial "1.18.2"
-  run ./bin/helmenv list local
-  assert_output --partial "3.2.0"
-}
-
-@test "install" {
-  run ./bin/kbenv uninstall 1.18.2
-  run ./bin/helmenv uninstall 3.2.0
-
-  run ./bin/kbenv install 1.18.2
-  assert_output --partial "Done! Saving it at"
-  run ./bin/helmenv install 3.2.0
-  assert_output --partial "Done! Saving it at"
-}
-
-@test "uninstall" {
-  run ./bin/kbenv install 1.18.2
-  run ./bin/helmenv install 3.2.0
-
-  run ./bin/kbenv uninstall 1.18.2
-  assert_output --partial "Done! 1.18.2 version uninstalled from"
-  run ./bin/helmenv uninstall 3.2.0
-  assert_output --partial "Done! 3.2.0 version uninstalled from"
-}
-
-@test "use" {
-  run ./bin/kbenv install 1.18.1
-  run ./bin/helmenv install 3.2.0
-
-  run ./bin/kbenv use 1.18.1
-  assert_output --partial "Done! Using 1.18.1 version."
-  run ./bin/helmenv use 3.2.0
-  assert_output --partial "Done! Using 3.2.0 version."
-
-  run ./bin/kubectl-wrapper version --client
-  assert_output --partial 'GitVersion:"v1.18.1"'
-  run ./bin/helm-wrapper version --client
-  assert_output --partial 'Version:"v3.2.0"'
-  run ./bin/kbenv uninstall 1.18.1
-  run ./bin/helmenv uninstall 3.2.0
-}
-
 @test "apply" {
   if [[ "$KIND_CREATE_CLUSTER" == "true" ]]
   then
@@ -84,16 +30,19 @@ function setup() {
   fi
 
   run ./bin/kbenv install 1.18.1
+  assert_success
   run ./bin/kubectl-wrapper create deployment hello-node --image=k8s.gcr.io/echoserver:1.4
   assert_success
 
   pod=$(./bin/kubectl-wrapper get pod -l app=hello-node -o=custom-columns=:.metadata.name | tail -n1)
   run ./bin/kubectl-wrapper rollout status deploy hello-node
+  assert_success
   run ./bin/kubectl-wrapper exec "$pod" -- ls
   assert_success
   refute_output --partial "Unable to use a TTY"
 
   run ./bin/kbenv uninstall 1.18.1
+  assert_success
 
   if [[ "$KIND_CREATE_CLUSTER" == "true" ]]
   then

@@ -1,0 +1,19 @@
+name: Integrarion test in MacOS
+
+on: push
+
+jobs:
+  int-test:
+    runs-on: macos-latest
+    steps:
+      - name: Set up Go 1.14
+        uses: actions/setup-go@v1
+        with:
+          go-version: 1.14
+        id: go
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+      - name: Run int tests
+        run: go version && bats tests/managers.test
