@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"os"
 	"path/filepath"
 	"sort"
 	"strconv"
@@ -93,6 +94,15 @@ func GetRemoteVersions(endpoint string) ([]*version.Version, error) {
 	}
 
 	defer resp.Body.Close()
+
+	forbidden := 403
+	if resp.StatusCode == forbidden {
+		fmt.Println("The request to Github's API failed, sorry.")
+		fmt.Println("You may still install the version you want, if you know it. It will always go as X.Y.Z.")
+		fmt.Println("The complete request response is ", resp)
+		os.Exit(1)
+	}
+
 	lastPage, err := GetLastPage(resp.Header.Get("Link"))
 
 	if err != nil {

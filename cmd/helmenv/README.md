@@ -107,6 +107,11 @@ Use "helmenv [command] --help" for more information about a command.
 
 ### List installable versions
 
+This option uses Github API to paginate all versions. Github API has some usage
+limitations. It usually works, but if you happen to do a lot of requests to
+github or are on an office or similar, chances are that this command will fail.
+You can still install binaries if you know the version you want, thought.
+
 ```bash
 $ helmenv list remote
 1.18.2
