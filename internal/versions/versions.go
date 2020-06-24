@@ -12,6 +12,8 @@ import (
 	"strings"
 	"time"
 
+	"runtime"
+
 	"github.com/hashicorp/go-version"
 	. "github.com/little-angry-clouds/kubernetes-binaries-managers/internal/helpers"
 	"github.com/mitchellh/go-homedir"
@@ -65,12 +67,17 @@ func GetLocalVersions(binary string) ([]*version.Version, error) {
 	var versions []*version.Version // nolint:prealloc
 
 	home, _ := homedir.Dir()
-	binDir := fmt.Sprintf("%s/.bin/%s-v*", home, binary)
+	binDir, _ := filepath.Abs(fmt.Sprintf("%s/.bin/%s-v*", home, binary))
 	matches, _ := filepath.Glob(binDir)
 
 	for _, match := range matches {
-		v := strings.Split(match, "/")
+		v := strings.Split(match, string(os.PathSeparator))
 		vs := strings.Replace(v[len(v)-1], binary+"-v", "", 1)
+
+		if runtime.GOOS == "windows" {
+			vs = strings.Replace(vs, ".exe", "", 1)
+		}
+
 		ver, err := version.NewVersion(vs)
 
 		if err != nil {

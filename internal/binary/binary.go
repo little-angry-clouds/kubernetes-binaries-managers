@@ -10,6 +10,8 @@ import (
 	"strings"
 	"time"
 
+	"path/filepath"
+
 	. "github.com/little-angry-clouds/kubernetes-binaries-managers/internal/helpers"
 	"github.com/mholt/archiver/v3"
 )
@@ -44,8 +46,16 @@ func DownloadBinary(version string, url string) ([]byte, error) {
 	arch := strings.Split(osArch, "/")[1]
 	url = fmt.Sprintf(url, version, os, arch)
 
-	if strings.Contains(osArch, "windows") {
-		url += ".exe"
+	if strings.Contains(url, "helm") {
+		if strings.Contains(osArch, "windows") {
+			url += ".zip"
+		} else {
+			url += ".tar.gz"
+		}
+	} else {
+		if strings.Contains(osArch, "windows") {
+			url += ".exe"
+		}
 	}
 
 	fmt.Println("Downloading binary...")
@@ -75,11 +85,13 @@ func DownloadBinary(version string, url string) ([]byte, error) {
 	return body, nil
 }
 
-func SaveBinary(fileName string, body []byte) error {
+func SaveBinary(fileName string, body []byte) error { // nolint: funlen
 	var err error
 
-	// helm returns a tar.gz, so save it somewhere and decompress it
+	// helm returns a compressed file, so save it somewhere and decompress it
 	if strings.Contains(fileName, "helm") {
+		var fileExt string
+
 		rand.Seed(time.Now().UnixNano())
 
 		randomNumbers := 5000
@@ -90,8 +102,17 @@ func SaveBinary(fileName string, body []byte) error {
 		}
 		// clean temp dir
 		defer os.RemoveAll(tempDir)
+
+		osArch, _ := GetOSArch()
 		file := fmt.Sprintf("%s/helm-%s", tempDir, strconv.Itoa(rand.Intn(randomNumbers)))
-		fileExt := ".tar.gz"
+		file, _ = filepath.Abs(file)
+
+		if strings.Contains(osArch, "windows") {
+			fileExt = ".zip"
+		} else {
+			fileExt = ".tar.gz"
+		}
+
 		err = ioutil.WriteFile(file+fileExt, body, 0750)
 
 		if err != nil {
@@ -99,14 +120,20 @@ func SaveBinary(fileName string, body []byte) error {
 		}
 
 		err = archiver.Unarchive(file+fileExt, file)
+
 		if err != nil {
 			return err
 		}
 
-		osArch, _ := GetOSArch()
 		OS := strings.Split(osArch, "/")[0]
 		arch := strings.Split(osArch, "/")[1]
-		body, err = ioutil.ReadFile(file + fmt.Sprintf("/%s-%s/helm", OS, arch))
+		path, _ := filepath.Abs(file + fmt.Sprintf("/%s-%s/helm", OS, arch))
+
+		if strings.Contains(osArch, "windows") {
+			path += ".exe"
+		}
+
+		body, err = ioutil.ReadFile(path)
 
 		if err != nil {
 			return err

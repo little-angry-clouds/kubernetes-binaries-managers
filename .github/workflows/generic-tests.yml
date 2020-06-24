@@ -1,4 +1,4 @@
-name: Generic tests
+name: Static tests
 
 on: push
 

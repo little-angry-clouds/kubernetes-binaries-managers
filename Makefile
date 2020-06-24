@@ -40,8 +40,8 @@ unit-test:
 	go test ./...
 
 int-test: | $(KIND)
-	bats tests/wrapers.test
 	bats tests/managers.test
+	bats tests/wrappers.test
 
 PLATFORMS := linux-amd64 linux-386 darwin-amd64 darwin-386 windows-amd64 windows-386
 temp = $(subst -, ,$@)

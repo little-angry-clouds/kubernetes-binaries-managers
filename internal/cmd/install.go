@@ -3,7 +3,7 @@ package cmd
 import (
 	"fmt"
 	"os"
-
+	"path/filepath"
 	"strings"
 
 	. "github.com/little-angry-clouds/kubernetes-binaries-managers/internal/binary"
@@ -46,9 +46,10 @@ func install(cmd *cobra.Command, args []string) { // nolint:funlen
 	// Set base bin directory
 	home, _ := homedir.Dir()
 	fileName := fmt.Sprintf("%s/.bin/%s-v%s", home, BinaryToInstall, version)
+	fileName, _ = filepath.Abs(fileName)
 
 	if strings.Contains(osArch, "windows") {
-		fileName += ".exe"
+		fileName += windowsSuffix
 	}
 	// Check if binary exists locally
 	if FileExists(fileName) {

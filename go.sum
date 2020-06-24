@@ -112,6 +112,8 @@ github.com/jonboulle/clockwork v0.1.0/go.mod h1:Ii8DK3G1RaLaWxj9trq07+26W01tbo22
 github.com/jpoles1/gopherbadger v1.0.0 h1:1hWuWkWUhFPGxVRHiFEi/+WLteggAHG2dF1lgd2t6bc=
 github.com/jpoles1/gopherbadger v2.2.0+incompatible h1:2aysGaPeOKyAMvpDRy8MwQoOysvcKLOe/VNq9Cw8QsA=
 github.com/jpoles1/gopherbadger v2.2.0+incompatible/go.mod h1:DVwxsf5adYLiDOj955t/ejfCRWjKA5tme6Vejb72Ro0=
+github.com/jpoles1/gopherbadger v2.3.0+incompatible h1:XMBrJ4UAGZkHisRncvL0xaNB5U8rbqqtzfVXKyLcn7s=
+github.com/jpoles1/gopherbadger v2.3.0+incompatible/go.mod h1:DVwxsf5adYLiDOj955t/ejfCRWjKA5tme6Vejb72Ro0=
 github.com/json-iterator/go v0.0.0-20180612202835-f2b4162afba3/go.mod h1:+SdeFBvtyEkXs7REEP0seUULqWtbJapLOCVDaaPEHmU=
 github.com/json-iterator/go v1.1.8 h1:QiWkFLKq0T7mpzwOTu6BzNDbfTE8OLrYhVKYMLF46Ok=
 github.com/json-iterator/go v1.1.8/go.mod h1:KdQUCv79m/52Kvf8AW2vK1V8akMuk1QjK/uOdHXbAo4=
