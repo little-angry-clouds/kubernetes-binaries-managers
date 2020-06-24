@@ -25,14 +25,14 @@ function setup() {
 
 @test "list remote versions" {
   run ./bin/kbenv list remote --all-versions
-  if [ assert_output --partial "The request to Github's API failed, sorry." ]
+  if [ "$status" -eq 1 ]
   then
     skip "Attacking Github's API failed, probably because of it's rating. Skipping the test."
   fi
   assert_output --partial "1.18.2"
 
   run ./bin/helmenv list remote --all-versions
-  if [ assert_output --partial "The request to Github's API failed, sorry." ]
+  if [ "$status" -eq 1 ]
   then
     skip "Attacking Github's API failed, probably because of it's rating. Skipping the test."
   fi
