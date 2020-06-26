@@ -5,11 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.2.0] - 2020-06-20
+## [0.2.0] - 2020-06-26
 
 ### New
-Add support to the `kubectl-wrapper` to automatically download the version that
-the cluster has.
+Add support to the `kubectl-wrapper` to automatically download the same binary
+version that the cluster has.
+
+### Fix
+- `kubectl-wrapper` bug that prevented to exec pods
+- control 403 error on github api that prevents listing available releases to
+  install
+- fix plenty of bugs that made windows releases unusable
+
+### Other
+- add specific integration tests for MacOs and Windows
 
 ## [0.1.1] - 2020-06-18
 
