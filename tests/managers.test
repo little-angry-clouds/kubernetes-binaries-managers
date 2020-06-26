@@ -23,34 +23,6 @@ function setup() {
   export PATH=$PATH:$(pwd)/bin/
 }
 
-@test "list remote versions" {
-  run ./bin/kbenv list remote --all-versions
-  if [ assert_output --partial "The request to Github's API failed, sorry." ]
-  then
-    skip "Attacking Github's API failed, probably because of it's rating. Skipping the test."
-  fi
-  assert_output --partial "1.18.2"
-
-  run ./bin/helmenv list remote --all-versions
-  if [ assert_output --partial "The request to Github's API failed, sorry." ]
-  then
-    skip "Attacking Github's API failed, probably because of it's rating. Skipping the test."
-  fi
-  assert_output --partial "3.2.0"
-}
-
-@test "list local versions" {
-  run ./bin/kbenv install 1.18.2
-  assert_success
-  run ./bin/helmenv install 3.2.0
-  assert_success
-
-  run ./bin/kbenv list local
-  assert_output --partial "1.18.2"
-  run ./bin/helmenv list local
-  assert_output --partial "3.2.0"
-}
-
 @test "install" {
   run ./bin/kbenv uninstall 1.18.2
   assert_success
@@ -99,4 +71,32 @@ function setup() {
   assert_success
   run ./bin/helmenv uninstall 3.2.0
   assert_success
+}
+
+@test "list local versions" {
+  run ./bin/kbenv install 1.18.2
+  assert_success
+  run ./bin/helmenv install 3.2.0
+  assert_success
+
+  run ./bin/kbenv list local
+  assert_output --partial "1.18.2"
+  run ./bin/helmenv list local
+  assert_output --partial "3.2.0"
+}
+
+@test "list remote versions" {
+  run ./bin/kbenv list remote --all-versions
+  if [ "$status" -eq 1 ]
+  then
+    skip "Attacking Github's API failed, probably because of it's rating. Skipping the test."
+  fi
+  assert_output --partial "1.18.2"
+
+  run ./bin/helmenv list remote --all-versions
+  if [ "$status" -eq 1 ]
+  then
+    skip "Attacking Github's API failed, probably because of it's rating. Skipping the test."
+  fi
+  assert_output --partial "3.2.0"
 }

@@ -1,4 +1,4 @@
-name: Integrarion test in MacOS
+name: Int Test MacOS
 
 on: push
 

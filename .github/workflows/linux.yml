@@ -1,4 +1,4 @@
-name: Integration test in Linux
+name: Int Test Linux
 
 on: push
 

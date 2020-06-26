@@ -1,3 +1,5 @@
+![Static Tests](https://github.com/little-angry-clouds/kubernetes-binaries-managers/workflows/Generic%20tests/badge.svg) ![Int test Linux](https://github.com/little-angry-clouds/kubernetes-binaries-managers/workflows/Int%20test%20in%20Linux/badge.svg) ![Int test MacOS](https://github.com/little-angry-clouds/kubernetes-binaries-managers/workflows/Integrarion%20test%20in%20MacOS/badge.svg) ![Int test Windows](https://github.com/little-angry-clouds/kubernetes-binaries-managers/workflows/Int%20test%20in%20Windows/badge.svg)
+
 # helmenv
 [Helm](https://helm.sh/) version manager inspired by
 [tfenv](https://github.com/tfutils/tfenv/).
@@ -106,6 +108,11 @@ Use "helmenv [command] --help" for more information about a command.
 ```
 
 ### List installable versions
+
+This option uses Github API to paginate all versions. Github API has some usage
+limitations. It usually works, but if you happen to do a lot of requests to
+github or are on an office or similar, chances are that this command will fail.
+You can still install binaries if you know the version you want, thought.
 
 ```bash
 $ helmenv list remote

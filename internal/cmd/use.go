@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"path/filepath"
 
 	. "github.com/little-angry-clouds/kubernetes-binaries-managers/internal/helpers"
 	"github.com/mitchellh/go-homedir"
@@ -28,6 +29,7 @@ func use(cmd *cobra.Command, args []string) {
 	home, _ := homedir.Dir()
 	binPath := fmt.Sprintf("%s/.bin", home)
 	defaultBin := fmt.Sprintf("%s/.%s-version", binPath, BinaryToInstall)
+	defaultBin, _ = filepath.Abs(defaultBin)
 
 	err = ioutil.WriteFile(defaultBin, []byte(version), 0750)
 	CheckGenericError(err)

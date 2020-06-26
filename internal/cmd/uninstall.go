@@ -3,7 +3,8 @@ package cmd
 import (
 	"fmt"
 	"os"
-	"strings"
+	"path/filepath"
+	"runtime"
 
 	. "github.com/little-angry-clouds/kubernetes-binaries-managers/internal/helpers"
 	"github.com/mitchellh/go-homedir"
@@ -13,7 +14,6 @@ import (
 func uninstall(cmd *cobra.Command, args []string) {
 	// TODO añadir soporte para fzf
 	var err error
-	var osArch string
 	var expectedArgLength int = 1
 
 	// TODO cambiar por ExactArgs
@@ -31,10 +31,12 @@ func uninstall(cmd *cobra.Command, args []string) {
 	// Set base bin directory
 	home, _ := homedir.Dir()
 	fileName := fmt.Sprintf("%s/.bin/%s-v%s", home, BinaryToInstall, version)
+	fileName, _ = filepath.Abs(fileName)
 
-	if strings.Contains(osArch, "windows") {
+	if runtime.GOOS == "windows" {
 		fileName += windowsSuffix
 	}
+
 	// Check if binary exists locally
 	if FileExists(fileName) {
 		err = os.Remove(fileName)

@@ -5,11 +5,14 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"os"
 	"path/filepath"
 	"sort"
 	"strconv"
 	"strings"
 	"time"
+
+	"runtime"
 
 	"github.com/hashicorp/go-version"
 	. "github.com/little-angry-clouds/kubernetes-binaries-managers/internal/helpers"
@@ -64,12 +67,17 @@ func GetLocalVersions(binary string) ([]*version.Version, error) {
 	var versions []*version.Version // nolint:prealloc
 
 	home, _ := homedir.Dir()
-	binDir := fmt.Sprintf("%s/.bin/%s-v*", home, binary)
+	binDir, _ := filepath.Abs(fmt.Sprintf("%s/.bin/%s-v*", home, binary))
 	matches, _ := filepath.Glob(binDir)
 
 	for _, match := range matches {
-		v := strings.Split(match, "/")
+		v := strings.Split(match, string(os.PathSeparator))
 		vs := strings.Replace(v[len(v)-1], binary+"-v", "", 1)
+
+		if runtime.GOOS == "windows" {
+			vs = strings.Replace(vs, ".exe", "", 1)
+		}
+
 		ver, err := version.NewVersion(vs)
 
 		if err != nil {
@@ -93,6 +101,15 @@ func GetRemoteVersions(endpoint string) ([]*version.Version, error) {
 	}
 
 	defer resp.Body.Close()
+
+	forbidden := 403
+	if resp.StatusCode == forbidden {
+		fmt.Println("The request to Github's API failed, sorry.")
+		fmt.Println("You may still install the version you want, if you know it. It will always go as X.Y.Z.")
+		fmt.Println("The complete request response is ", resp)
+		os.Exit(1)
+	}
+
 	lastPage, err := GetLastPage(resp.Header.Get("Link"))
 
 	if err != nil {
