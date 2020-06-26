@@ -95,6 +95,6 @@ func Wrapper(binName string) { // nolint: funlen
 	err = cmd.Run()
 
 	if err != nil {
-		fmt.Printf("%s\n", err)
+		fmt.Fprintf(os.Stderr, "%s\n", err)
 	}
 }

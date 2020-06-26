@@ -15,7 +15,7 @@ import (
 func CheckGenericError(err error) {
 	if err != nil {
 		message := fmt.Sprintf("An error was detected, exiting: %s", err)
-		fmt.Println(message)
+		fmt.Fprintf(os.Stderr, "%s\n", message)
 		os.Exit(1) // nolint:gomnd
 	}
 }
@@ -37,7 +37,7 @@ func CheckHTTPError(resp *http.Response) {
 			message = string(body)
 		}
 
-		fmt.Println("An error detected getting all versions: " + message)
+		fmt.Fprintf(os.Stderr, "An error detected getting all versions: %s", message)
 		os.Exit(1) // nolint:gomnd
 	}
 }
