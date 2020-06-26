@@ -1,4 +1,4 @@
-![Static Tests](https://github.com/little-angry-clouds/kubernetes-binaries-managers/workflows/Generic%20tests/badge.svg) ![Integration Test in Linux](https://github.com/little-angry-clouds/kubernetes-binaries-managers/workflows/Integration%20test%20in%20Linux/badge.svg) ![Integrarion Test in MacOS](https://github.com/little-angry-clouds/kubernetes-binaries-managers/workflows/Integrarion%20test%20in%20MacOS/badge.svg) ![Integration Test in Windows](https://github.com/little-angry-clouds/kubernetes-binaries-managers/workflows/Integration%20test%20in%20Windows/badge.svg)
+![Static Tests](https://github.com/little-angry-clouds/kubernetes-binaries-managers/workflows/Generic%20tests/badge.svg) ![Int Test Linux](https://github.com/little-angry-clouds/kubernetes-binaries-managers/workflows/Int%20Test%20Linux/badge.svg) ![Int Test MacOS](https://github.com/little-angry-clouds/kubernetes-binaries-managers/workflows/Int%20Test%20MacOS/badge.svg) ![Int Test Windows](https://github.com/little-angry-clouds/kubernetes-binaries-managers/workflows/Int%20Test%20Windows/badge.svg)
 
 # kbenv
 [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) version

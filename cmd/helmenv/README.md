@@ -1,4 +1,4 @@
-![Static Tests](https://github.com/little-angry-clouds/kubernetes-binaries-managers/workflows/Generic%20tests/badge.svg) ![Int test Linux](https://github.com/little-angry-clouds/kubernetes-binaries-managers/workflows/Int%20test%20in%20Linux/badge.svg) ![Int test MacOS](https://github.com/little-angry-clouds/kubernetes-binaries-managers/workflows/Integrarion%20test%20in%20MacOS/badge.svg) ![Int test Windows](https://github.com/little-angry-clouds/kubernetes-binaries-managers/workflows/Int%20test%20in%20Windows/badge.svg)
+![Static Tests](https://github.com/little-angry-clouds/kubernetes-binaries-managers/workflows/Generic%20tests/badge.svg) ![Int Test Linux](https://github.com/little-angry-clouds/kubernetes-binaries-managers/workflows/Int%20Test%20Linux/badge.svg) ![Int Test MacOS](https://github.com/little-angry-clouds/kubernetes-binaries-managers/workflows/Int%20Test%20MacOS/badge.svg) ![Int Test Windows](https://github.com/little-angry-clouds/kubernetes-binaries-managers/workflows/Int%20Test%20Windows/badge.svg)
 
 # helmenv
 [Helm](https://helm.sh/) version manager inspired by
