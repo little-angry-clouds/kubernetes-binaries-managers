@@ -75,10 +75,7 @@ func Wrapper(binName string) { // nolint: funlen
 			cmd.Stderr = os.Stderr
 			err = cmd.Run()
 
-			if err != nil {
-				fmt.Printf("%s\n", err)
-				os.Exit(1)
-			}
+			helpers.CheckGenericError(err)
 		}
 
 		finalVersion = version
@@ -95,6 +92,6 @@ func Wrapper(binName string) { // nolint: funlen
 	err = cmd.Run()
 
 	if err != nil {
-		fmt.Printf("%s\n", err)
+		fmt.Fprintf(os.Stderr, "%s\n", err)
 	}
 }
