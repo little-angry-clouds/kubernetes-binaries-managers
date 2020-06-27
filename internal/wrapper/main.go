@@ -71,7 +71,6 @@ func Wrapper(binName string) { // nolint: funlen
 		if !helpers.FileExists(bin) {
 			args := []string{"install", version}
 			cmd := exec.Command("kbenv"+fileExt, args...) // nolint: gosec
-			cmd.Stdout = os.Stdout
 			cmd.Stderr = os.Stderr
 			err = cmd.Run()
 
