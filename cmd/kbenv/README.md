@@ -4,7 +4,7 @@
 [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) version
 manager inspired by [tfenv](https://github.com/tfutils/tfenv/).
 
-If you come from the kbenv bash version, you should read the [FAQ](#how-to-migrate-from-the-bash-version)!
+If you are coming from the kbenv bash version, you should read the [FAQ](#how-to-migrate-from-the-bash-version)!
 
 ## Features
 
@@ -23,9 +23,9 @@ Currently kbenv supports the following OSes
 
 ## Installation
 
-There's to components in `kbenv`. One is the `kbenv` binary, the other one
+There are two components in `kbenv`. One is the `kbenv` binary, the other one
 is a `kubectl` wrapper. It works as if were `kubectl`, but it has some logic to choose
-the version to execute. Yo should take care and ensure that you don't have any
+the version to execute. You should take care and ensure that you don't have any
 `kubectl` binary in your path. To check which binary you're executing, you can see
 it with:
 
@@ -56,7 +56,7 @@ echo 'export PATH="$(brew --prefix)/bin/:$PATH"' >> ~/.bashrc
 echo 'export PATH="$(brew --prefix)/bin/:$PATH"' >> ~/.zshrc
 ```
 
-For Windows you should do the weird stuff that it needs to to set an environmental variable.
+For Windows you should do the weird stuff that it needs to set an environmental variable.
 
 ### Manually
 
@@ -69,8 +69,6 @@ echo 'export PATH="$HOME/.bin:$PATH"' >> ~/.zshrc
 
 mkdir -p ~/.bin
 ```
-
-For Windows you should do the weird stuff that it needs to to set an environmental variable.
 
 2. Download the binaries and put them on your path
 
