@@ -4,7 +4,7 @@
 [Helm](https://helm.sh/) version manager inspired by
 [tfenv](https://github.com/tfutils/tfenv/).
 
-If you come from the helmenv bash version, you should read the [FAQ](#how-to-migrate-from-the-bash-version)!
+If you are coming from the helmenv bash version, you should read the [FAQ](#how-to-migrate-from-the-bash-version)!
 
 ## Features
 
@@ -20,9 +20,9 @@ Currently helmenv supports the following OSes
 
 ## Installation
 
-There's to components in `helmenv`. One is the `helmenv` binary, the other one
+There are two components in `helmenv`. One is the `helmenv` binary, the other one
 is a `helm` wrapper. It works as if were `helm`, but it has some logic to choose
-the version to execute. Yo should take care and ensure that you don't have any
+the version to execute. You should take care and ensure that you don't have any
 `helm` binary in your path. To check which binary you're executing, you can see
 it with:
 
