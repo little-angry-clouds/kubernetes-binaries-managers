@@ -4,7 +4,7 @@
 [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) version
 manager inspired by [tfenv](https://github.com/tfutils/tfenv/).
 
-If you coming from the kbenv bash version, you should read the [FAQ](#how-to-migrate-from-the-bash-version)!
+If you are coming from the kbenv bash version, you should read the [FAQ](#how-to-migrate-from-the-bash-version)!
 
 ## Features
 
