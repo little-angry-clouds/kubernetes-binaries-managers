@@ -85,6 +85,7 @@ func Wrapper(binName string) { // nolint: funlen
 	bin += fileExt
 
 	cmd := exec.Command(bin, os.Args[1:]...)
+	cmd.Env = os.Environ()
 	cmd.Stdout = os.Stdout
 	cmd.Stdin = os.Stdin
 	cmd.Stderr = os.Stderr
