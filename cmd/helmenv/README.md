@@ -99,13 +99,13 @@ Usage:
 
 Available Commands:
   help        Help about any command
-  install     Install helm binary
+  install     Install binary
   list        Lists local and remote versions
-  uninstall   Uninstall helm binary
+  uninstall   Uninstall binary
   use         Set the default version to use
 
 Flags:
-  -h, --help     help for helmenv
+  -h, --help     help
 
 Use "helmenv [command] --help" for more information about a command.
 ```

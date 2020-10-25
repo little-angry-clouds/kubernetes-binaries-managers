@@ -84,7 +84,7 @@ func install(cmd *cobra.Command, args []string) { // nolint:funlen
 func init() {
 	var installCmd = &cobra.Command{
 		Use:   "install",
-		Short: "Install helm binary",
+		Short: "Install binary",
 		Run:   install,
 	}
 

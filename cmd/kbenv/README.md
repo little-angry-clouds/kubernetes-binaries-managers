@@ -100,13 +100,13 @@ Usage:
 
 Available Commands:
   help        Help about any command
-  install     Install kubectl binary
+  install     Install binary
   list        Lists local and remote versions
-  uninstall   Uninstall kubectl binary
+  uninstall   Uninstall binary
   use         Set the default version to use
 
 Flags:
-  -h, --help     help for kbenv
+  -h, --help     help
 
 Use "kbenv [command] --help" for more information about a command.
 ```
