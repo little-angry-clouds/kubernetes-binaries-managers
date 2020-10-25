@@ -1,6 +1,7 @@
 ![Static Tests](https://github.com/little-angry-clouds/kubernetes-binaries-managers/workflows/Generic%20tests/badge.svg) ![Int Test Linux](https://github.com/little-angry-clouds/kubernetes-binaries-managers/workflows/Int%20Test%20Linux/badge.svg) ![Int Test MacOS](https://github.com/little-angry-clouds/kubernetes-binaries-managers/workflows/Int%20Test%20MacOS/badge.svg) ![Int Test Windows](https://github.com/little-angry-clouds/kubernetes-binaries-managers/workflows/Int%20Test%20Windows/badge.svg)
 
 # helmenv
+
 [Helm](https://helm.sh/) version manager inspired by
 [tfenv](https://github.com/tfutils/tfenv/).
 
@@ -14,6 +15,7 @@ If you are coming from the helmenv bash version, you should read the [FAQ](#how-
 ## Supported OS
 
 Currently helmenv supports the following OSes
+
 - Mac OS
 - Linux
 - Windows
@@ -26,7 +28,7 @@ the version to execute. You should take care and ensure that you don't have any
 `helm` binary in your path. To check which binary you're executing, you can see
 it with:
 
-``` bash
+```bash
 $ which helm
 /opt/brew/bin/helm
 ```
@@ -36,7 +38,7 @@ $ which helm
 This is the recomended way, since it provides upgrades. It should work in Mac,
 Linux and Windows with WSL.
 
-``` bash
+```bash
 # Just the first time, activate the repository
 brew tap little-angry-clouds/homebrew-my-brews
 # To install
@@ -47,7 +49,7 @@ brew upgrade helmenv
 
 You should add your `homebrew` binary path to your PATH:
 
-``` bash
+```bash
 echo 'export PATH="$(brew --prefix)/bin/:$PATH"' >> ~/.bashrc
 # Or
 echo 'export PATH="$(brew --prefix)/bin/:$PATH"' >> ~/.zshrc
@@ -85,9 +87,10 @@ mv helm-wrapper-linux-amd64 ~/.bin/helm
 And that's it!
 
 ## Usage
+
 ### Help
 
-``` bash
+```bash
 $ helmenv help
 Kubectl version manager
 
@@ -96,13 +99,13 @@ Usage:
 
 Available Commands:
   help        Help about any command
-  install     Install helm binary
+  install     Install binary
   list        Lists local and remote versions
-  uninstall   Uninstall helm binary
+  uninstall   Uninstall binary
   use         Set the default version to use
 
 Flags:
-  -h, --help     help for helmenv
+  -h, --help     help
 
 Use "helmenv [command] --help" for more information about a command.
 ```
@@ -155,7 +158,9 @@ Done! 1.16.5 version uninstalled from /home/ap/.bin/kubectl-v1.16.5.
 ```
 
 ## FAQ
+
 ### Why migrate from bash to go?
+
 The project just as a way of downloading the binary versions. Progressively it
 began to grow a little. And then they came some PR for different stuff, but the
 hard ones where the ones for adding better support for MacOS. I don't own a Mac,
@@ -173,7 +178,9 @@ programming language, I could add tests. Not that there's any right now, but I'm
 on it.
 
 ### How to migrate from the bash version
+
 For doing so you have to:
+
 - Delete the `helmenv` repository: `rm -r ~/.helmenv`
 - Delete the line that sources the bash script: `source $HOME/.helmenv/helmenv.sh`
 
@@ -182,7 +189,7 @@ beehaviours are:
 
 - You don't have to set the `v` before the versions. For example:
 
-``` bash
+```bash
 $ helmenv install v2.0.1
 # Would be
 $ helmenv install 2.0.1
@@ -190,7 +197,7 @@ $ helmenv install 2.0.1
 
 - The listing commands have been separed:
 
-``` bash
+```bash
 # Before
 $ helmenv list
 $ helmenv list-remote
@@ -200,10 +207,11 @@ $ helmenv list remote
 ```
 
 ## How to enforce a helm version
+
 Just create a `.helm_version` in your directory pointing to the version you want
 to use. For example:
 
-``` bash
+```bash
 $ helmenv install 2.14.3
 ...
 $ helmenv install 2.14.2
@@ -218,4 +226,5 @@ Client: &version.Version{SemVer:"v2.14.2", GitCommit:"a8b13cc5ab6a7dbef0a58f5061
 ```
 
 ## License
+
 GPL3
