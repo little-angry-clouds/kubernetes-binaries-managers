@@ -1,6 +1,7 @@
 ![Static Tests](https://github.com/little-angry-clouds/kubernetes-binaries-managers/workflows/Generic%20tests/badge.svg) ![Int Test Linux](https://github.com/little-angry-clouds/kubernetes-binaries-managers/workflows/Int%20Test%20Linux/badge.svg) ![Int Test MacOS](https://github.com/little-angry-clouds/kubernetes-binaries-managers/workflows/Int%20Test%20MacOS/badge.svg) ![Int Test Windows](https://github.com/little-angry-clouds/kubernetes-binaries-managers/workflows/Int%20Test%20Windows/badge.svg)
 
 # kbenv
+
 [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) version
 manager inspired by [tfenv](https://github.com/tfutils/tfenv/).
 
@@ -17,6 +18,7 @@ If you are coming from the kbenv bash version, you should read the [FAQ](#how-to
 ## Supported OS
 
 Currently kbenv supports the following OSes
+
 - Mac OS
 - Linux
 - Windows
@@ -29,7 +31,7 @@ the version to execute. You should take care and ensure that you don't have any
 `kubectl` binary in your path. To check which binary you're executing, you can see
 it with:
 
-``` bash
+```bash
 $ which kubectl
 /opt/brew/bin/kubectl
 ```
@@ -39,7 +41,7 @@ $ which kubectl
 This is the recomended way, since it provides upgrades. It should work in Mac,
 Linux and Windows with WSL.
 
-``` bash
+```bash
 # Just the first time, activate the repository
 brew tap little-angry-clouds/homebrew-my-brews
 # To install
@@ -50,7 +52,7 @@ brew upgrade kbenv
 
 You should add your `homebrew` binary path to your PATH:
 
-``` bash
+```bash
 echo 'export PATH="$(brew --prefix)/bin/:$PATH"' >> ~/.bashrc
 # Or
 echo 'export PATH="$(brew --prefix)/bin/:$PATH"' >> ~/.zshrc
@@ -86,9 +88,10 @@ mv kubectl-wrapper-linux-amd64 ~/.bin/kubectl
 And that's it!
 
 ## Usage
+
 ### Help
 
-``` bash
+```bash
 $ kbenv help
 Kubectl version manager
 
@@ -164,7 +167,9 @@ Done! 1.16.5 version uninstalled from /home/ap/.bin/kubectl-v1.16.5.
 ```
 
 ## FAQ
+
 ### Why migrate from bash to go?
+
 The project just as a way of downloading the binary versions. Progressively it
 began to grow a little. And then they came some PR for different stuff, but the
 hard ones where the ones for adding better support for MacOS. I don't own a Mac,
@@ -179,7 +184,9 @@ worries about the OS! I even add support for Windows, because why not. And also,
 being Go a real programming language, I could add tests.
 
 ### How to migrate from the bash version
+
 For doing so you have to:
+
 - Delete the `kbenv` repository: `rm -r ~/.kbenv`
 - Delete the line that sources the bash script: `source $HOME/.kbenv/kbenv.sh`
 
@@ -188,7 +195,7 @@ beehaviours are:
 
 - You don't have to set the `v` before the versions. For example:
 
-``` bash
+```bash
 $ kbenv install v2.0.1
 # Would be
 $ kbenv install 2.0.1
@@ -196,7 +203,7 @@ $ kbenv install 2.0.1
 
 - The listing commands have been separed:
 
-``` bash
+```bash
 # Before
 $ kbenv list
 $ kbenv list-remote
@@ -206,10 +213,11 @@ $ kbenv list remote
 ```
 
 ## How to enforce a kubectl version
+
 Just create a `.kubectl_version` in your directory pointing to the version you want
 to use. For example:
 
-``` bash
+```bash
 $ kbenv install 1.18.0
 ...
 $ kbenv install 1.18.2
@@ -224,4 +232,5 @@ Client Version: version.Info{Major:"1", Minor:"18", GitVersion:"v1.18.0", GitCom
 ```
 
 ## License
+
 GPL3
