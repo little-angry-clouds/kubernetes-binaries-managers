@@ -4,7 +4,7 @@ on: push
 
 jobs:
   int-test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     steps:
       - name: Set up Go 1.14
         uses: actions/setup-go@v1
@@ -15,6 +15,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           submodules: recursive
-      - uses: engineerd/setup-kind@v0.4.0
+      - uses: engineerd/setup-kind@v0.5.0
       - name: Run int tests
         run: sudo add-apt-repository ppa:duggan/bats && sudo apt-get update && sudo apt-get install bats -y && make int-test
