@@ -55,6 +55,12 @@ func FileExists(filename string) bool {
 func GetLastPage(link string) (int, error) {
 	var lastPageInt int
 	var err error
+	var minLastPage int = 2
+
+	// When there's no link, it means there's least than 100 releases
+	if link == "" {
+		return minLastPage, nil
+	}
 
 	link = strings.Split(link, " ")[2]
 	lastPageIndex := strings.LastIndex(link, "page=")
@@ -66,7 +72,7 @@ func GetLastPage(link string) (int, error) {
 	}
 
 	if lastPageInt == 0 {
-		lastPageInt = 2
+		lastPageInt = minLastPage
 	}
 
 	return lastPageInt, nil
