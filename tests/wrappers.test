@@ -9,13 +9,13 @@ function setup() {
   if [[ ! -e ./bin/kbenv  ]]
   then
     make build
-  elif [[ ! -e ./bin/helmenv ]]
-  then
-    make build
   elif [[ ! -e ./bin/kubectl-wrapper ]]
   then
     make build
-  elif [[ ! -e ./bin/helm-wrapper ]]
+  elif [[ ! -e ./bin/ocenv ]]
+  then
+    make build
+  elif [[ ! -e ./bin/oc-wrapper ]]
   then
     make build
   fi
@@ -23,7 +23,7 @@ function setup() {
   export PATH=$PATH:$(pwd)/bin/
 }
 
-@test "apply" {
+@test "kubectl apply" {
   if [[ "$KIND_CREATE_CLUSTER" == "true" ]]
   then
     teardownCallback=$(create_cluster)
@@ -31,15 +31,18 @@ function setup() {
 
   run ./bin/kbenv install 1.18.1
   assert_success
-  run ./bin/kubectl-wrapper create deployment hello-node --image=k8s.gcr.io/echoserver:1.4
+  run ./bin/kubectl-wrapper create deployment hello-node-kubectl --image=k8s.gcr.io/echoserver:1.4
   assert_success
 
-  pod=$(./bin/kubectl-wrapper get pod -l app=hello-node -o=custom-columns=:.metadata.name | tail -n1)
-  run ./bin/kubectl-wrapper rollout status deploy hello-node
+  pod=$(./bin/kubectl-wrapper get pod -l app=hello-node-kubectl -o=custom-columns=:.metadata.name | tail -n1)
+  run ./bin/kubectl-wrapper rollout status deploy hello-node-kubectl -w
   assert_success
   run ./bin/kubectl-wrapper exec "$pod" -- ls
   assert_success
   refute_output --partial "Unable to use a TTY"
+
+  run ./bin/kubectl-wrapper delete deployment hello-node-kubectl --wait=true
+  assert_success
 
   run ./bin/kbenv uninstall 1.18.1
   assert_success
@@ -49,6 +52,37 @@ function setup() {
     eval "$teardownCallback"
   fi
 }
+
+@test "oc apply" {
+  if [[ "$KIND_CREATE_CLUSTER" == "true" ]]
+  then
+    teardownCallback=$(create_cluster)
+  fi
+
+  run ./bin/ocenv install 4.7.0-0.okd-2021-07-03-190901
+  assert_success
+  run ./bin/oc-wrapper create deployment hello-node-oc --image=k8s.gcr.io/echoserver:1.4
+  assert_success
+
+  pod=$(./bin/oc-wrapper get pod -l app=hello-node-oc -o=custom-columns=:.metadata.name | tail -n1)
+  run ./bin/oc-wrapper rollout status deploy hello-node-oc -w
+  assert_success
+  run ./bin/oc-wrapper exec "$pod" -- ls
+  assert_success
+  refute_output --partial "Unable to use a TTY"
+
+  run ./bin/oc-wrapper delete deployment hello-node-oc --wait=true
+  assert_success
+
+  run ./bin/ocenv uninstall 1.18.1
+  assert_success
+
+  if [[ "$KIND_CREATE_CLUSTER" == "true" ]]
+  then
+    eval "$teardownCallback"
+  fi
+}
+
 
 @test "kubectl auto" {
   if [[ "$KIND_CREATE_CLUSTER" == "true" ]]

@@ -9,13 +9,19 @@ function setup() {
   if [[ ! -e ./bin/kbenv  ]]
   then
     make build
-  elif [[ ! -e ./bin/helmenv ]]
-  then
-    make build
   elif [[ ! -e ./bin/kubectl-wrapper ]]
   then
     make build
+  elif [[ ! -e ./bin/helmenv ]]
+  then
+    make build
   elif [[ ! -e ./bin/helm-wrapper ]]
+  then
+    make build
+  elif [[ ! -e ./bin/ocenv ]]
+  then
+    make build
+  elif [[ ! -e ./bin/oc-wrapper ]]
   then
     make build
   fi
@@ -28,15 +34,21 @@ function setup() {
   assert_success
   run ./bin/helmenv uninstall 3.2.0
   assert_success
+  run ./bin/ocenv uninstall 4.7.0-0.okd-2021-07-03-190901
+  assert_success
 
   run ./bin/kbenv install 1.18.2
   assert_output --partial "Done! Saving it at"
   run ./bin/helmenv install 3.2.0
   assert_output --partial "Done! Saving it at"
+  run ./bin/ocenv install 4.7.0-0.okd-2021-07-03-190901
+  assert_output --partial "Done! Saving it at"
 
   run ./bin/kbenv uninstall 1.18.2
   assert_success
   run ./bin/helmenv uninstall 3.2.0
+  assert_success
+  run ./bin/ocenv uninstall 4.7.0-0.okd-2021-07-03-190901
   assert_success
 }
 
@@ -45,11 +57,15 @@ function setup() {
   assert_success
   run ./bin/helmenv install 3.2.0
   assert_success
+  run ./bin/ocenv install 4.7.0-0.okd-2021-07-03-190901
+  assert_success
 
   run ./bin/kbenv uninstall 1.18.2
   assert_output --partial "Done! 1.18.2 version uninstalled from"
   run ./bin/helmenv uninstall 3.2.0
   assert_output --partial "Done! 3.2.0 version uninstalled from"
+  run ./bin/ocenv uninstall 4.7.0-0.okd-2021-07-03-190901
+  assert_output --partial "Done! 4.7.0-0.okd-2021-07-03-190901 version uninstalled from"
 }
 
 @test "use" {
@@ -57,19 +73,27 @@ function setup() {
   assert_success
   run ./bin/helmenv install 3.2.0
   assert_success
+  run ./bin/ocenv install 4.7.0-0.okd-2021-07-03-190901
+  assert_success
 
   run ./bin/kbenv use 1.18.1
   assert_output --partial "Done! Using 1.18.1 version."
   run ./bin/helmenv use 3.2.0
   assert_output --partial "Done! Using 3.2.0 version."
+  run ./bin/ocenv use 4.7.0-0.okd-2021-07-03-190901
+  assert_output --partial "Done! Using 4.7.0-0.okd-2021-07-03-190901 version."
 
   run ./bin/kubectl-wrapper version --client
   assert_output --partial 'GitVersion:"v1.18.1"'
   run ./bin/helm-wrapper version --client
   assert_output --partial 'Version:"v3.2.0"'
+  run ./bin/oc-wrapper version --client
+  assert_output --partial 'Version: 4.7.0-0.okd-2021-07-03-190901'
   run ./bin/kbenv uninstall 1.18.1
   assert_success
   run ./bin/helmenv uninstall 3.2.0
+  assert_success
+  run ./bin/ocenv uninstall 4.7.0-0.okd-2021-07-03-190901
   assert_success
 }
 
@@ -78,11 +102,15 @@ function setup() {
   assert_success
   run ./bin/helmenv install 3.2.0
   assert_success
+  run ./bin/ocenv install 4.7.0-0.okd-2021-07-03-190901
+  assert_success
 
   run ./bin/kbenv list local
   assert_output --partial "1.18.2"
   run ./bin/helmenv list local
   assert_output --partial "3.2.0"
+  run ./bin/ocenv list local
+  assert_output --partial "4.7.0-0.okd-2021-07-03-190901"
 }
 
 @test "list remote versions" {
@@ -99,4 +127,11 @@ function setup() {
     skip "Attacking Github's API failed, probably because of it's rating. Skipping the test."
   fi
   assert_output --partial "3.2.0"
+
+  run ./bin/ocenv list remote --all-versions
+  if [ "$status" -eq 1 ]
+  then
+    skip "Attacking Github's API failed, probably because of it's rating. Skipping the test."
+  fi
+  assert_output --partial "4.7.0-0.okd-2021-07-03-190901"
 }

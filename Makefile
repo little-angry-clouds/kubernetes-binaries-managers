@@ -26,7 +26,9 @@ build:
 	go build -a -o bin/helmenv cmd/helmenv/main.go; \
 	go build -a -o bin/helm-wrapper cmd/helm-wrapper/main.go; \
 	go build -a -o bin/kbenv cmd/kbenv/main.go; \
-	go build -a -o bin/kubectl-wrapper cmd/kubectl-wrapper/main.go;
+	go build -a -o bin/kubectl-wrapper cmd/kubectl-wrapper/main.go; \
+	go build -a -o bin/ocenv cmd/ocenv/main.go; \
+	go build -a -o bin/oc-wrapper cmd/oc-wrapper/main.go;
 
 clean:
 	-rm -r bin/
@@ -43,7 +45,7 @@ int-test: | $(KIND)
 	bats tests/managers.test
 	bats tests/wrappers.test
 
-PLATFORMS := linux-amd64 linux-386 darwin-amd64 darwin-386 windows-amd64 windows-386
+PLATFORMS := linux-amd64 linux-386 darwin-amd64 windows-amd64 windows-386
 temp = $(subst -, ,$@)
 os = $(word 1, $(temp))
 arch = $(word 2, $(temp))
@@ -54,5 +56,8 @@ $(PLATFORMS):
 	CGO_ENABLED=0 GOOS=$(os) GOARCH=$(arch) go build -a -o bin/helm-wrapper-$(os)-$(arch) cmd/helm-wrapper/main.go; \
 	CGO_ENABLED=0 GOOS=$(os) GOARCH=$(arch) go build -a -o bin/kbenv-$(os)-$(arch) cmd/kbenv/main.go; \
 	CGO_ENABLED=0 GOOS=$(os) GOARCH=$(arch) go build -a -o bin/kubectl-wrapper-$(os)-$(arch) cmd/kubectl-wrapper/main.go; \
+	CGO_ENABLED=0 GOOS=$(os) GOARCH=$(arch) go build -a -o bin/ocenv-$(os)-$(arch) cmd/ocenv/main.go; \
+	CGO_ENABLED=0 GOOS=$(os) GOARCH=$(arch) go build -a -o bin/oc-wrapper-$(os)-$(arch) cmd/oc-wrapper/main.go; \
 	tar -C bin -cvzf releases/helmenv-$(os)-$(arch).tar.gz helmenv-$(os)-$(arch) helm-wrapper-$(os)-$(arch); \
-	tar -C bin -cvzf releases/kbenv-$(os)-$(arch).tar.gz kbenv-$(os)-$(arch) kubectl-wrapper-$(os)-$(arch);
+	tar -C bin -cvzf releases/kbenv-$(os)-$(arch).tar.gz kbenv-$(os)-$(arch) kubectl-wrapper-$(os)-$(arch); \
+	tar -C bin -cvzf releases/ocenv-$(os)-$(arch).tar.gz ocenv-$(os)-$(arch) oc-wrapper-$(os)-$(arch);
