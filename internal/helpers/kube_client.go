@@ -2,6 +2,7 @@ package helpers
 
 import (
 	"flag"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -53,7 +54,11 @@ func KubeGetVersion() (string, error) {
 		return version, nil
 	}
 
-	config, _ = clientcmd.BuildConfigFromFlags("", kubeconfig)
+	config, err = clientcmd.BuildConfigFromFlags("", kubeconfig)
+	if err != nil {
+		fmt.Println(fmt.Errorf("kbenv failed to load kubeconfig: %w", err))
+		os.Exit(1)
+	}
 	config.Timeout = 1 * time.Second
 
 	client, err := kubernetes.NewForConfig(config)
