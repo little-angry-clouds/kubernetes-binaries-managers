@@ -1,6 +1,6 @@
 name: Int Test Linux
 
-on: push
+on: [push, pull_request_target]
 
 jobs:
   int-test:

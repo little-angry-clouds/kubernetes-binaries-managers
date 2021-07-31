@@ -59,6 +59,7 @@ func KubeGetVersion() (string, error) {
 		fmt.Println(fmt.Errorf("kbenv failed to load kubeconfig: %w", err))
 		os.Exit(1)
 	}
+
 	config.Timeout = 1 * time.Second
 
 	client, err := kubernetes.NewForConfig(config)
