@@ -20,9 +20,9 @@ builds:
       - darwin
     ldflags:
       - -s -w
-      - -X github.com/little-angry-clouds/kubernetes-binaries-managers/cmd.Version={{.Version}}
-      - -X github.com/little-angry-clouds/kubernetes-binaries-managers/cmd.Commit={{.Commit}}
-      - -X github.com/little-angry-clouds/kubernetes-binaries-managers/cmd.Date={{.Date}}
+      - -X github.com/little-angry-clouds/kubernetes-binaries-managers/internal/cmd.Version={{.Version}}
+      - -X github.com/little-angry-clouds/kubernetes-binaries-managers/internal/cmd.Commit={{.Commit}}
+      - -X github.com/little-angry-clouds/kubernetes-binaries-managers/internal/cmd.Date={{.Date}}
     goarch:
       - amd64
       - arm
@@ -38,9 +38,9 @@ builds:
       - darwin
     ldflags:
       - -s -w
-      - -X github.com/little-angry-clouds/kubernetes-binaries-managers/cmd.Version={{.Version}}
-      - -X github.com/little-angry-clouds/kubernetes-binaries-managers/cmd.Commit={{.Commit}}
-      - -X github.com/little-angry-clouds/kubernetes-binaries-managers/cmd.Date={{.Date}}
+      - -X github.com/little-angry-clouds/kubernetes-binaries-managers/internal/cmd.Version={{.Version}}
+      - -X github.com/little-angry-clouds/kubernetes-binaries-managers/internal/cmd.Commit={{.Commit}}
+      - -X github.com/little-angry-clouds/kubernetes-binaries-managers/internal/cmd.Date={{.Date}}
     goarch:
       - amd64
       - arm
@@ -79,9 +79,9 @@ builds:
       - darwin
     ldflags:
       - -s -w
-      - -X github.com/little-angry-clouds/kubernetes-binaries-managers/cmd.Version={{.Version}}
-      - -X github.com/little-angry-clouds/kubernetes-binaries-managers/cmd.Commit={{.Commit}}
-      - -X github.com/little-angry-clouds/kubernetes-binaries-managers/cmd.Date={{.Date}}
+      - -X github.com/little-angry-clouds/kubernetes-binaries-managers/internal/cmd.Version={{.Version}}
+      - -X github.com/little-angry-clouds/kubernetes-binaries-managers/internal/cmd.Commit={{.Commit}}
+      - -X github.com/little-angry-clouds/kubernetes-binaries-managers/internal/cmd.Date={{.Date}}
     goarch:
       - amd64
       - arm
@@ -107,3 +107,5 @@ release:
     owner: little-angry-clouds
     name: kubernetes-binaries-managers
   draft: true
+archives:
+  name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
