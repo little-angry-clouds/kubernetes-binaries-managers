@@ -1,0 +1,53 @@
+---
+before:
+  hooks:
+    - go mod tidy
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+    ldflags:
+      - -s -w
+      - -X github.com/little-angry-clouds/kubernetes-binaries-managers/cmd.Version={{.Version}}
+      - -X github.com/little-angry-clouds/kubernetes-binaries-managers/cmd.Commit={{.Commit}}
+      - -X github.com/little-angry-clouds/kubernetes-binaries-managers/cmd.Date={{.Date}}
+    goarch:
+      - amd64
+      - arm
+      - arm64
+checksum:
+  name_template: 'checksums.txt'
+snapshot:
+  name_template: "{{ .Tag }}-next"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+      - '^ci:'
+      - '^style:'
+      - '^build:'
+release:
+  github:
+    owner: little-angry-clouds
+    name: kubernetes-binaries-managers
+  draft: true
+brews:
+  - name: kubernetes-binaries-managers
+    tap:
+      owner: little-angry-clouds
+      name: homebrew-my-brews
+    commit_author:
+      name: goreleaserbot
+      email: goreleaser@carlosbecker.com
+    folder: Formula
+    homepage: https://github.com/little-angry-clouds/kubernetes-binaries-managers/
+    description: Kubernetes-Binaries-Managers is a project to help manage kubernetes related binaries.
+    license: "GPL3"
+    dependencies:
+      - name: go
+    install: |
+      bin.install "kubernetes-binaries-managers"

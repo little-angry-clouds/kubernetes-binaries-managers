@@ -1,6 +1,8 @@
+---
 name: Release
 
 on: push
+
 jobs:
   release:
     runs-on: ubuntu-18.04
@@ -15,40 +17,12 @@ jobs:
         uses: actions/checkout@v2
         with:
           submodules: recursive
-      - name: Build releases
-        run: make releases
-        if: startsWith(github.ref, 'refs/tags/')
-      - name: Fetch remote references
-        run: |
-          git fetch --no-tags --prune --depth=1 origin +refs/heads/*:refs/remotes/origin/*
-      - name: Generate Changelog
-        run: git diff origin/master HEAD --no-ext-diff --unified=0 --exit-code -a --no-prefix CHANGELOG.md | egrep "^\+" | tail -n +2 | sed "s/^+//g" > "${{ github.workflow }}-CHANGELOG.txt"
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+      - name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@v2
         with:
-          body_path: "${{ github.workflow }}-CHANGELOG.txt"
-          files: releases/*.tar.gz
-          draft: true
-      - name: Bump helmenv homebrew formula
-        uses: mislav/bump-homebrew-formula-action@v1
-        with:
-          formula-name: helmenv
-          homebrew-tap: little-angry-clouds/my-brews
+          distribution: goreleaser
+          version: latest
+          args: release
         env:
-          COMMITTER_TOKEN: ${{ secrets.COMMITTER_TOKEN }}
-      - name: Bump kbenv homebrew formula
-        uses: mislav/bump-homebrew-formula-action@v1
-        with:
-          formula-name: kbenv
-          homebrew-tap: little-angry-clouds/my-brews
-        env:
-          COMMITTER_TOKEN: ${{ secrets.COMMITTER_TOKEN }}
-      - name: Bump ocenv homebrew formula
-        uses: mislav/bump-homebrew-formula-action@v1
-        with:
-          formula-name: ocenv
-          homebrew-tap: little-angry-clouds/my-brews
-        env:
-          COMMITTER_TOKEN: ${{ secrets.COMMITTER_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.COMMITER_TOKEN }}
