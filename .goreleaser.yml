@@ -1,8 +1,18 @@
 ---
-before:
-  hooks:
-    - go mod tidy
 builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
+      - arm
+      - arm64
+    main: cmd/helm-wrapper/main.go
+    id: helm-wrapper
+    binary: "helm-{{ .Os }}-{{ .Arch }}/helm-wrapper"
+    no_unique_dist_dir: true
   - env:
       - CGO_ENABLED=0
     goos:
@@ -17,6 +27,68 @@ builds:
       - amd64
       - arm
       - arm64
+    main: cmd/helmenv/main.go
+    id: helmenv
+    binary: "helm-{{ .Os }}-{{ .Arch }}/helmenv"
+    no_unique_dist_dir: true
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+    ldflags:
+      - -s -w
+      - -X github.com/little-angry-clouds/kubernetes-binaries-managers/cmd.Version={{.Version}}
+      - -X github.com/little-angry-clouds/kubernetes-binaries-managers/cmd.Commit={{.Commit}}
+      - -X github.com/little-angry-clouds/kubernetes-binaries-managers/cmd.Date={{.Date}}
+    goarch:
+      - amd64
+      - arm
+      - arm64
+    main: cmd/kbenv/main.go
+    id: kbenv
+    binary: "kubectl-{{ .Os }}-{{ .Arch }}/kbenv"
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
+      - arm
+      - arm64
+    main: cmd/kubectl-wrapper/main.go
+    id: kubectl-wrapper
+    binary: "kubectl-{{ .Os }}-{{ .Arch }}/kubectl-wrapper"
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
+      - arm
+      - arm64
+    main: cmd/oc-wrapper/main.go
+    id: oc-wrapper
+    binary: "oc-{{ .Os }}-{{ .Arch }}/oc-wrapper"
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+    ldflags:
+      - -s -w
+      - -X github.com/little-angry-clouds/kubernetes-binaries-managers/cmd.Version={{.Version}}
+      - -X github.com/little-angry-clouds/kubernetes-binaries-managers/cmd.Commit={{.Commit}}
+      - -X github.com/little-angry-clouds/kubernetes-binaries-managers/cmd.Date={{.Date}}
+    goarch:
+      - amd64
+      - arm
+      - arm64
+    main: cmd/ocenv/main.go
+    id: ocenv
+    binary: "oc-{{ .Os }}-{{ .Arch }}/ocenv"
 checksum:
   name_template: 'checksums.txt'
 snapshot:
@@ -35,19 +107,3 @@ release:
     owner: little-angry-clouds
     name: kubernetes-binaries-managers
   draft: true
-brews:
-  - name: kubernetes-binaries-managers
-    tap:
-      owner: little-angry-clouds
-      name: homebrew-my-brews
-    commit_author:
-      name: goreleaserbot
-      email: goreleaser@carlosbecker.com
-    folder: Formula
-    homepage: https://github.com/little-angry-clouds/kubernetes-binaries-managers/
-    description: Kubernetes-Binaries-Managers is a project to help manage kubernetes related binaries.
-    license: "GPL3"
-    dependencies:
-      - name: go
-    install: |
-      bin.install "kubernetes-binaries-managers"
