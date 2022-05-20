@@ -1,0 +1,111 @@
+---
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
+      - arm
+      - arm64
+    main: cmd/helm-wrapper/main.go
+    id: helm-wrapper
+    binary: "helm-{{ .Os }}-{{ .Arch }}/helm-wrapper"
+    no_unique_dist_dir: true
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+    ldflags:
+      - -s -w
+      - -X github.com/little-angry-clouds/kubernetes-binaries-managers/internal/cmd.Version={{.Version}}
+      - -X github.com/little-angry-clouds/kubernetes-binaries-managers/internal/cmd.Commit={{.Commit}}
+      - -X github.com/little-angry-clouds/kubernetes-binaries-managers/internal/cmd.Date={{.Date}}
+    goarch:
+      - amd64
+      - arm
+      - arm64
+    main: cmd/helmenv/main.go
+    id: helmenv
+    binary: "helm-{{ .Os }}-{{ .Arch }}/helmenv"
+    no_unique_dist_dir: true
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+    ldflags:
+      - -s -w
+      - -X github.com/little-angry-clouds/kubernetes-binaries-managers/internal/cmd.Version={{.Version}}
+      - -X github.com/little-angry-clouds/kubernetes-binaries-managers/internal/cmd.Commit={{.Commit}}
+      - -X github.com/little-angry-clouds/kubernetes-binaries-managers/internal/cmd.Date={{.Date}}
+    goarch:
+      - amd64
+      - arm
+      - arm64
+    main: cmd/kbenv/main.go
+    id: kbenv
+    binary: "kubectl-{{ .Os }}-{{ .Arch }}/kbenv"
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
+      - arm
+      - arm64
+    main: cmd/kubectl-wrapper/main.go
+    id: kubectl-wrapper
+    binary: "kubectl-{{ .Os }}-{{ .Arch }}/kubectl-wrapper"
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
+      - arm
+      - arm64
+    main: cmd/oc-wrapper/main.go
+    id: oc-wrapper
+    binary: "oc-{{ .Os }}-{{ .Arch }}/oc-wrapper"
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+    ldflags:
+      - -s -w
+      - -X github.com/little-angry-clouds/kubernetes-binaries-managers/internal/cmd.Version={{.Version}}
+      - -X github.com/little-angry-clouds/kubernetes-binaries-managers/internal/cmd.Commit={{.Commit}}
+      - -X github.com/little-angry-clouds/kubernetes-binaries-managers/internal/cmd.Date={{.Date}}
+    goarch:
+      - amd64
+      - arm
+      - arm64
+    main: cmd/ocenv/main.go
+    id: ocenv
+    binary: "oc-{{ .Os }}-{{ .Arch }}/ocenv"
+checksum:
+  name_template: 'checksums.txt'
+snapshot:
+  name_template: "{{ .Tag }}-next"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+      - '^ci:'
+      - '^style:'
+      - '^build:'
+release:
+  github:
+    owner: little-angry-clouds
+    name: kubernetes-binaries-managers
+  draft: true
+archives:
+  name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
