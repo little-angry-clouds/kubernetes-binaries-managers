@@ -74,10 +74,10 @@ page](https://github.com/little-angry-clouds/kubernetes-binaries-managers/releas
 and download the version you want. For example:
 
 ```bash
-wget https://github.com/little-angry-clouds/kubernetes-binaries-managers/releases/download/0.0.4/ocenv-linux-amd64.tar.gz
-tar xzf ocenv-linux-amd64.tar.gz
-mv ocenv-linux-amd64 ~/.bin/ocenv
-mv oc-wrapper-linux-amd64 ~/.bin/oc
+wget https://github.com/little-angry-clouds/kubernetes-binaries-managers/releases/download/v1.0.0/kubernetes-binaries-managers_1.0.0_linux_amd64.tar.gz
+tar -xzf kubernetes-binaries-managers_1.0.0_linux_amd64.tar.gz
+mv oc-linux-amd64/ocenv ~/.bin/ocenv
+mv oc-linux-amd64/oc-wrapper ~/.bin/oc
 ```
 
 And that's it!

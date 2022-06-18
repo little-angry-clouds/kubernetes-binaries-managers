@@ -78,10 +78,10 @@ page](https://github.com/little-angry-clouds/kubernetes-binaries-managers/releas
 and download the version you want. For example:
 
 ```bash
-wget https://github.com/little-angry-clouds/kubernetes-binaries-managers/releases/download/0.0.4/helmenv-linux-amd64.tar.gz
-tar xzf helmenv-linux-amd64.tar.gz
-mv helmenv-linux-amd64 ~/.bin/helmenv
-mv helm-wrapper-linux-amd64 ~/.bin/helm
+wget https://github.com/little-angry-clouds/kubernetes-binaries-managers/releases/download/v1.0.0/kubernetes-binaries-managers_1.0.0_linux_amd64.tar.gz
+tar -xzf kubernetes-binaries-managers_1.0.0_linux_amd64.tar.gz
+mv helm-linux-amd64/helmenv ~/.bin/helmenv
+mv helm-linux-amd64/helm-wrapper ~/.bin/helm
 ```
 
 And that's it!

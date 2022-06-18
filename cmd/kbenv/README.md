@@ -79,10 +79,10 @@ page](https://github.com/little-angry-clouds/kubernetes-binaries-managers/releas
 and download the version you want. For example:
 
 ```bash
-wget https://github.com/little-angry-clouds/kubernetes-binaries-managers/releases/download/0.0.4/kbenv-linux-amd64.tar.gz
-tar xzf kbenv-linux-amd64.tar.gz
-mv kbenv-linux-amd64 ~/.bin/kbenv
-mv kubectl-wrapper-linux-amd64 ~/.bin/kubectl
+wget https://github.com/little-angry-clouds/kubernetes-binaries-managers/releases/download/v1.0.0/kubernetes-binaries-managers_1.0.0_linux_amd64.tar.gz
+tar -xzf kubernetes-binaries-managers_1.0.0_linux_amd64.tar.gz
+mv kubectl-linux-amd64/kbenv ~/.bin/kbenv
+mv kubectl-linux-amd64/kubectl-wrapper ~/.bin/kubectl
 ```
 
 And that's it!
