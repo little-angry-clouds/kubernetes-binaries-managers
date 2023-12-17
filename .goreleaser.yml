@@ -22,9 +22,9 @@ builds:
       - windows
     ldflags:
       - -s -w
-      - -X github.com/little-angry-clouds/kubernetes-binaries-managers/internal/cmd.Version={{.Version}}
-      - -X github.com/little-angry-clouds/kubernetes-binaries-managers/internal/cmd.Commit={{.Commit}}
-      - -X github.com/little-angry-clouds/kubernetes-binaries-managers/internal/cmd.Date={{.Date}}
+      - -X github.com/nixknight/binaries-managers/internal/cmd.Version={{.Version}}
+      - -X github.com/nixknight/binaries-managers/internal/cmd.Commit={{.Commit}}
+      - -X github.com/nixknight/binaries-managers/internal/cmd.Date={{.Date}}
     goarch:
       - amd64
       - arm
@@ -41,9 +41,9 @@ builds:
       - windows
     ldflags:
       - -s -w
-      - -X github.com/little-angry-clouds/kubernetes-binaries-managers/internal/cmd.Version={{.Version}}
-      - -X github.com/little-angry-clouds/kubernetes-binaries-managers/internal/cmd.Commit={{.Commit}}
-      - -X github.com/little-angry-clouds/kubernetes-binaries-managers/internal/cmd.Date={{.Date}}
+      - -X github.com/nixknight/binaries-managers/internal/cmd.Version={{.Version}}
+      - -X github.com/nixknight/binaries-managers/internal/cmd.Commit={{.Commit}}
+      - -X github.com/nixknight/binaries-managers/internal/cmd.Date={{.Date}}
     goarch:
       - amd64
       - arm
@@ -85,9 +85,9 @@ builds:
       - windows
     ldflags:
       - -s -w
-      - -X github.com/little-angry-clouds/kubernetes-binaries-managers/internal/cmd.Version={{.Version}}
-      - -X github.com/little-angry-clouds/kubernetes-binaries-managers/internal/cmd.Commit={{.Commit}}
-      - -X github.com/little-angry-clouds/kubernetes-binaries-managers/internal/cmd.Date={{.Date}}
+      - -X github.com/nixknight/binaries-managers/internal/cmd.Version={{.Version}}
+      - -X github.com/nixknight/binaries-managers/internal/cmd.Commit={{.Commit}}
+      - -X github.com/nixknight/binaries-managers/internal/cmd.Date={{.Date}}
     goarch:
       - amd64
       - arm

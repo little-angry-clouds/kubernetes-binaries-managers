@@ -6,17 +6,20 @@ import (
 	"path/filepath"
 	"strings"
 
-	. "github.com/little-angry-clouds/kubernetes-binaries-managers/internal/binary"
-	. "github.com/little-angry-clouds/kubernetes-binaries-managers/internal/helpers"
 	"github.com/mitchellh/go-homedir"
+	. "github.com/nixknight/binaries-managers/internal/binary"
+	. "github.com/nixknight/binaries-managers/internal/helpers"
 	"github.com/spf13/cobra"
 )
+
+var customDir string
 
 func install(cmd *cobra.Command, args []string) { // nolint:funlen
 	// TODO añadir soporte para fzf
 	var err error
 	var osArch string
 	var expectedArgLength int = 1
+	var dirPath string
 
 	// TODO cambiar por ExactArgs
 	if len(args) == 0 {
@@ -44,8 +47,14 @@ func install(cmd *cobra.Command, args []string) { // nolint:funlen
 		os.Exit(0)
 	}
 	// Set base bin directory
-	home, _ := homedir.Dir()
-	fileName := fmt.Sprintf("%s/.bin/%s-v%s", home, BinaryToInstall, version)
+	if customDir != "" {
+		dirPath = customDir
+	} else {
+		home, _ := homedir.Dir()
+		dirPath = filepath.Join(home, ".bin")
+	}
+
+	fileName := fmt.Sprintf("%s/%s-v%s", dirPath, BinaryToInstall, version)
 	fileName, _ = filepath.Abs(fileName)
 
 	if strings.Contains(osArch, "windows") {
@@ -87,6 +96,9 @@ func init() {
 		Short: "Install binary",
 		Run:   install,
 	}
+
+	// Adding a command-line flag for the directory path
+	installCmd.Flags().StringVarP(&customDir, "dir", "d", "", "custom directory path to install the binary")
 
 	RootCmd.AddCommand(installCmd)
 }

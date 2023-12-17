@@ -6,15 +6,18 @@ import (
 	"path/filepath"
 	"runtime"
 
-	. "github.com/little-angry-clouds/kubernetes-binaries-managers/internal/helpers"
 	"github.com/mitchellh/go-homedir"
+	. "github.com/nixknight/binaries-managers/internal/helpers"
 	"github.com/spf13/cobra"
 )
+
+var customUninstallDir string
 
 func uninstall(cmd *cobra.Command, args []string) {
 	// TODO añadir soporte para fzf
 	var err error
 	var expectedArgLength int = 1
+	var dirPath string
 
 	// TODO cambiar por ExactArgs
 	if len(args) == 0 {
@@ -29,8 +32,14 @@ func uninstall(cmd *cobra.Command, args []string) {
 	var version = args[0]
 
 	// Set base bin directory
-	home, _ := homedir.Dir()
-	fileName := fmt.Sprintf("%s/.bin/%s-v%s", home, BinaryToInstall, version)
+	if customUninstallDir != "" {
+		dirPath = customUninstallDir
+	} else {
+		home, _ := homedir.Dir()
+		dirPath = filepath.Join(home, ".bin")
+	}
+
+	fileName := fmt.Sprintf("%s/%s-v%s", dirPath, BinaryToInstall, version)
 	fileName, _ = filepath.Abs(fileName)
 
 	if runtime.GOOS == "windows" {
@@ -56,5 +65,6 @@ var uninstallCmd = &cobra.Command{
 }
 
 func init() {
+	uninstallCmd.Flags().StringVarP(&customUninstallDir, "dir", "d", "", "custom directory path to uninstall the binary")
 	RootCmd.AddCommand(uninstallCmd)
 }

@@ -5,8 +5,8 @@ import (
 	"os"
 
 	"github.com/hashicorp/go-version"
-	. "github.com/little-angry-clouds/kubernetes-binaries-managers/internal/helpers"
-	. "github.com/little-angry-clouds/kubernetes-binaries-managers/internal/versions"
+	. "github.com/nixknight/binaries-managers/internal/helpers"
+	. "github.com/nixknight/binaries-managers/internal/versions"
 	"github.com/spf13/cobra"
 )
 

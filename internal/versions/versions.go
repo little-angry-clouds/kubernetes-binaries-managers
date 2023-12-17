@@ -15,8 +15,8 @@ import (
 	"runtime"
 
 	"github.com/hashicorp/go-version"
-	. "github.com/little-angry-clouds/kubernetes-binaries-managers/internal/helpers"
 	"github.com/mitchellh/go-homedir"
+	. "github.com/nixknight/binaries-managers/internal/helpers"
 )
 
 type Page struct {

@@ -1,4 +1,4 @@
-![Static Tests](https://github.com/little-angry-clouds/kubernetes-binaries-managers/workflows/Generic%20tests/badge.svg) ![Int Test Linux](https://github.com/little-angry-clouds/kubernetes-binaries-managers/workflows/Int%20Test%20Linux/badge.svg) ![Int Test MacOS](https://github.com/little-angry-clouds/kubernetes-binaries-managers/workflows/Int%20Test%20MacOS/badge.svg) ![Int Test Windows](https://github.com/little-angry-clouds/kubernetes-binaries-managers/workflows/Int%20Test%20Windows/badge.svg)
+![Static Tests](https://github.com/nixknight/binaries-managers/workflows/Generic%20tests/badge.svg) ![Int Test Linux](https://github.com/nixknight/binaries-managers/workflows/Int%20Test%20Linux/badge.svg) ![Int Test MacOS](https://github.com/nixknight/binaries-managers/workflows/Int%20Test%20MacOS/badge.svg) ![Int Test Windows](https://github.com/nixknight/binaries-managers/workflows/Int%20Test%20Windows/badge.svg)
 
 # kbenv
 
@@ -75,11 +75,11 @@ mkdir -p ~/.bin
 2. Download the binaries and put them on your path
 
 Go to [the releases
-page](https://github.com/little-angry-clouds/kubernetes-binaries-managers/releases)
+page](https://github.com/nixknight/binaries-managers/releases)
 and download the version you want. For example:
 
 ```bash
-wget https://github.com/little-angry-clouds/kubernetes-binaries-managers/releases/download/v1.0.0/kubernetes-binaries-managers_1.0.0_linux_amd64.tar.gz
+wget https://github.com/nixknight/binaries-managers/releases/download/v1.0.0/kubernetes-binaries-managers_1.0.0_linux_amd64.tar.gz
 tar -xzf kubernetes-binaries-managers_1.0.0_linux_amd64.tar.gz
 mv kubectl-linux-amd64/kbenv ~/.bin/kbenv
 mv kubectl-linux-amd64/kubectl-wrapper ~/.bin/kubectl

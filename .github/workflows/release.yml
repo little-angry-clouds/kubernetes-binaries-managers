@@ -34,4 +34,3 @@ jobs:
           formula: |
             helmenv
             kbenv
-            ocenv

@@ -6,8 +6,8 @@ import (
 	"os"
 	"path/filepath"
 
-	. "github.com/little-angry-clouds/kubernetes-binaries-managers/internal/helpers"
 	"github.com/mitchellh/go-homedir"
+	. "github.com/nixknight/binaries-managers/internal/helpers"
 	"github.com/spf13/cobra"
 )
 

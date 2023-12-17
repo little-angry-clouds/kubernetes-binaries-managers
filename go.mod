@@ -1,4 +1,4 @@
-module github.com/little-angry-clouds/kubernetes-binaries-managers
+module github.com/nixknight/binaries-managers
 
 go 1.18
 
