@@ -75,7 +75,7 @@ func KubeGetVersion() (string, error) {
 		return version, nil
 	}
 
-	version = v.String()[1:]
+	version = parseVersionString(v.String())
 
 	return version, nil
 }
@@ -113,4 +113,30 @@ func getDefaultVersion() string {
 	}
 
 	return version
+}
+
+func parseVersionString(version string) string {
+	// Remove prepended v from version string
+	version = version[1:]
+
+	suffixDetectedLength := 2
+
+	slice := strings.Split(version, "-")
+	if len(slice) == suffixDetectedLength {
+		if !strings.HasPrefix(slice[1], "alpha") &&
+			!strings.HasPrefix(slice[1], "beta") &&
+			!strings.HasPrefix(slice[1], "rc") {
+			slice = slice[:len(slice)-1]
+		}
+	} else if len(slice) > suffixDetectedLength {
+		if strings.HasPrefix(slice[1], "alpha") ||
+			strings.HasPrefix(slice[1], "beta") ||
+			strings.HasPrefix(slice[1], "rc") {
+			slice = slice[:2]
+		} else {
+			slice = slice[:1]
+		}
+	}
+
+	return strings.Join(slice, "-")
 }

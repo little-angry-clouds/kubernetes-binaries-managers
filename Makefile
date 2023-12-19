@@ -3,7 +3,7 @@ BIN = $(CURDIR)/bin
 $(BIN):
 	@mkdir -p $@
 $(BIN)/golangci-lint: | $(BIN)
-	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.24.0
+	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.50.1
 $(BIN)/gopherbadger: | $(BIN)
 	GOBIN=$(BIN) go get github.com/jpoles1/gopherbadger
 $(BIN)/kind: | $(BIN)

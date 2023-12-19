@@ -17,6 +17,6 @@ jobs:
         with:
           submodules: recursive
       - name: Install bats
-        run: brew install bats
+        run: brew install bats-core
       - name: Run int tests
         run: bats tests/managers.test
