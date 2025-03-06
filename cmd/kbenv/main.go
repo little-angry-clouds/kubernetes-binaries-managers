@@ -7,8 +7,8 @@ import (
 	"github.com/mitchellh/go-homedir"
 )
 
-var binaryDownloadURL string = "https://storage.googleapis.com/kubernetes-release/release/v%s/bin/%s/%s/kubectl" // nolint:lll
-var versionsAPI string = "https://api.github.com/repos/kubernetes/kubernetes/releases?per_page=100&page="        // nolint:lll
+var binaryDownloadURL string = "https://dl.k8s.io/release/v%s/bin/%s/%s/kubectl"                          // nolint:lll
+var versionsAPI string = "https://api.github.com/repos/kubernetes/kubernetes/releases?per_page=100&page=" // nolint:lll
 
 func main() {
 	home, _ := homedir.Dir()
