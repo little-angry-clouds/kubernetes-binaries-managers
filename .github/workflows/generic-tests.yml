@@ -5,7 +5,7 @@ on: [pull_request_target]
 
 jobs:
   unit-test:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Set up Go 1.18
         uses: actions/setup-go@v1
@@ -20,7 +20,7 @@ jobs:
         run: make unit-test
 
   static:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Set up Go 1.18
         uses: actions/setup-go@v1
